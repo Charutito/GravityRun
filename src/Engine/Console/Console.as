@@ -21,9 +21,10 @@ package Engine.Console
 		{
 			this._model = new MCConsole();
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, evKeyDown);
-			registerCommand("Help", showHelp, "Muestra los comandos disponibles.");
-			registerCommand("Cls", clear, "Limpia el log de la consola.");
-			registerCommand("Exit", exit, "Cierra la aplicacion.");
+			registerCommand("help", showHelp, "Muestra los comandos disponibles.");
+			registerCommand("cls", clear, "Limpia el log de la consola.");
+			registerCommand("exit", exit, "Cierra la aplicacion.");
+			registerCommand("quit", exit, "Cierra la aplicacion.");
 		}
 		
 		protected function evKeyDown(event:KeyboardEvent):void
