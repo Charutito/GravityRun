@@ -20,7 +20,7 @@ package Engine.Assets
 	
 	public class AssetsManager extends EventDispatcher
 	{
-		public static const ENGINE_PATH:String = "engineAssets/";
+		public static const ENGINE_PATH:String = "Assets/";
 		
 		private var _loaderLinks:URLLoader;
 		private var _allAssets:Dictionary = new Dictionary();
@@ -32,7 +32,7 @@ package Engine.Assets
 		
 		public function AssetsManager()
 		{
-			//initiate preload when movieclip is ready...
+			this._preloadModel = new MC_Preload();
 			trace("Starting AssetsManager...");
 		}
 		
@@ -58,17 +58,23 @@ package Engine.Assets
 			this._numTotalAssets = this._allLinksForLoad.length;
 			loadAsset( this._allLinksForLoad[0] );
 			Locator.mainStage.addChild(this._preloadModel);
+			this._preloadModel.x = Locator.mainStage.stageWidth/2;
+			this._preloadModel.y = Locator.mainStage.stageHeight/2;
+			this._preloadModel.gotoAndStop(1);
+			
+			trace("Total assets: " + this._numTotalAssets);
+			trace("Links for load: " + this._allLinksForLoad);
 		}
 		
 		public function loadAsset(path:String):void
 		{
 			var folder:String = path.split("/")[0];
 			var completeURL:String = ENGINE_PATH + path;
-			
+			trace("Entre a load asset para cargar: " + completeURL);
 			switch(folder)
 			{
 				case "images":
-				case "swfs":
+				case "movies":
 					var newImage:Loader = new Loader();
 					newImage.load(new URLRequest( completeURL ) );
 					trace("Cargando Archivo de Imagen...");
@@ -98,8 +104,8 @@ package Engine.Assets
 		protected function evProgress(event:ProgressEvent):void
 		{
 			var percentLoaded:int = event.bytesLoaded * 100 / event.bytesTotal;
-			//this._preloadModel.current.gotoAndStop(percentLoaded);
-			
+			this._preloadModel.gotoAndStop(percentLoaded);
+			trace("Porcentaje: " + percentLoaded);
 		}
 		
 		protected function evError(event:IOErrorEvent):void
@@ -109,20 +115,25 @@ package Engine.Assets
 		
 		protected function evAssetComplete(event:Event):void
 		{
+			trace("Entre al evento de AssetComplete");
+			
 			this._numAssetsLoaded++;
 			var percentTotal:int = this._numAssetsLoaded * 100 / this._numTotalAssets;
-			//this._preloadModel.total.gotoAndStop(percentTotal);
+			this._preloadModel.gotoAndStop(percentTotal);
 			
 			//Remove asset Event
 			event.currentTarget.removeEventListener(Event.COMPLETE, evAssetComplete);
 			this._allLinksForLoad.shift();
 			this._allNamesForLoad.shift();
 			if(this._allLinksForLoad.length > 0)
+			{
 				loadAsset(this._allLinksForLoad[0]);
+				trace("Cargando asset: " + this._allNamesForLoad[0]);
+			}
 			else
 			{
 				Locator.mainStage.removeChild(this._preloadModel);
-				dispatchEvent( new Event("all_assets_loaded") ) ;
+				dispatchEvent( new AssetsManagerEvents(AssetsManagerEvents.ASSETS_COMPLETE) ) ;
 			}
 		}
 		
@@ -151,6 +162,7 @@ package Engine.Assets
 		
 		public function getMovieClip(className:String):MovieClip
 		{
+			
 			for(var varName:String in this._allAssets)
 			{
 				if(this._allAssets[varName] is Loader)
@@ -166,7 +178,6 @@ package Engine.Assets
 					}
 				}
 			}
-			
 			return null;
 		}
 		
