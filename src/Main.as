@@ -23,6 +23,8 @@ package
 		
 		protected function startGame(event:Event):void
 		{
+			
+			trace("Empieza el juego...");
 			player = Locator.assetsManager.getMovieClip("MC_hero")
 			Locator.mainStage.addChild(player);	
 			
