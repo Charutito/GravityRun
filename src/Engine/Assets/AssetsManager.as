@@ -61,16 +61,13 @@ package Engine.Assets
 			this._preloadModel.x = Locator.mainStage.stageWidth/2;
 			this._preloadModel.y = Locator.mainStage.stageHeight/2;
 			this._preloadModel.gotoAndStop(1);
-			
-			trace("Total assets: " + this._numTotalAssets);
-			trace("Links for load: " + this._allLinksForLoad);
 		}
 		
 		public function loadAsset(path:String):void
 		{
 			var folder:String = path.split("/")[0];
 			var completeURL:String = ENGINE_PATH + path;
-			trace("Entre a load asset para cargar: " + completeURL);
+
 			switch(folder)
 			{
 				case "images":
@@ -105,7 +102,6 @@ package Engine.Assets
 		{
 			var percentLoaded:int = event.bytesLoaded * 100 / event.bytesTotal;
 			this._preloadModel.gotoAndStop(percentLoaded);
-			trace("Porcentaje: " + percentLoaded);
 		}
 		
 		protected function evError(event:IOErrorEvent):void
@@ -114,9 +110,7 @@ package Engine.Assets
 		}
 		
 		protected function evAssetComplete(event:Event):void
-		{
-			trace("Entre al evento de AssetComplete");
-			
+		{	
 			this._numAssetsLoaded++;
 			var percentTotal:int = this._numAssetsLoaded * 100 / this._numTotalAssets;
 			this._preloadModel.gotoAndStop(percentTotal);
@@ -128,7 +122,6 @@ package Engine.Assets
 			if(this._allLinksForLoad.length > 0)
 			{
 				loadAsset(this._allLinksForLoad[0]);
-				trace("Cargando asset: " + this._allNamesForLoad[0]);
 			}
 			else
 			{
