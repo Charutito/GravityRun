@@ -22,10 +22,17 @@ package Engine.Camera
 			
 		}
 		
-		public function update()
+		
+		public function lookAt(target:MovieClip):void
 		{
+			var targetPosition:Point = new Point(target.x, target.y);
+			var globalPosition:Point = target.parent.localToGlobal(targetPosition);
+			var camPoint:Point = this._view.globalToLocal(globalPosition);
 			
+			x = (camPoint.x + target.width / 2) * zoom - Locator.mainStage.stageWidth / 2;
+			y = (camPoint.y + target.height / 2) * zoom - Locator.mainStage.stageHeight / 2;
 		}
+		
 		
 		public function on():void
 		{
@@ -45,6 +52,26 @@ package Engine.Camera
 		public function removeFromView(child:MovieClip):void
 		{
 			this._view.removeChild(child);
+		}
+		
+		public function get x():Number
+		{
+			return -this._view.x;
+		}
+		
+		public function set x(value:Number):void
+		{
+			this._view.x = -value;
+		}
+		
+		public function get y():Number
+		{
+			return -this._view.y;
+		}
+		
+		public function set y(value:Number):void
+		{
+			this._view.y = -value;
 		}
 		
 		public function get zoom():Number
@@ -74,44 +101,11 @@ package Engine.Camera
 			smoothZoom = zoom - this._zoomAmount;
 		}
 		
-		public function get x():Number
-		{
-			return -this._view.x;
-		}
-		
-		public function set x(value:Number):void
-		{
-			this._view.x = -value;
-		}
-		
-		public function get y():Number
-		{
-			return -this._view.y;
-		}
-		
-		public function set y(value:Number):void
-		{
-			this._view.y = -value;
-		}
-		
-		public function lookAt(target:MovieClip):void
-		{
-			var targetPosition:Point = new Point(target.x, target.y);
-			var globalPosition:Point = target.parent.localToGlobal(targetPosition);
-			var camPoint:Point = this._view.globalToLocal(globalPosition);
-			
-			x = (camPoint.x + target.width / 2) * zoom - Locator.mainStage.stageWidth / 2;
-			y = (camPoint.y + target.height / 2) * zoom - Locator.mainStage.stageHeight / 2;
-		}
 		
 		public function smoothLookAt(target:MovieClip):void
 		{
 			// a chequear en el caso de ser necesaria.
 		}
-		
-				
-			
-		
 		
 	}
 }

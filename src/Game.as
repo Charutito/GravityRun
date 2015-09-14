@@ -1,28 +1,51 @@
 package
 {
+	import Engine.Camera.Camera;
 	import Engine.Locator;
 	
 	import flash.display.MovieClip;
+	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.ui.Keyboard;
 
 	public class Game
 	{
-		//public var player:LACLASEDEMATI;
+		public var Runner:Player;
+		private var _controller:UserController;
+		
+		private var _cam:Camera;
 		
 		public function Game()
 		{
 			
 		}
-		
+
 		public function startGame(event:Event):void
 		{
-			/*player = Locator.assetsManager.getMovieClip("MC_hero")
-			Locator.mainStage.addChild(player);	
+
+			Runner = new Player();
+			Runner.spawn();
 			
-			player.x = Locator.mainStage.stageWidth/2;
-			player.y = Locator.mainStage.stageHeight/2;*/
+			_controller = new UserController(Runner, Keyboard.SPACE);
+
+			Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
+			
+			_cam = new Camera();
+			_cam.on();
+			//_cam.addToView();
 		}
 		
+		
+		protected function evUpdate(event:Event):void
+		{
+			Runner.update();
+			Runner.move();
+			_controller.Update();
+			
+			_cam.lookAt(Runner.model);
+
+		}
+
 		
 	}
 }
