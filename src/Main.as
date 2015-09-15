@@ -17,7 +17,7 @@ package
 			Locator.assetsManager.loadLinks("links01.txt");
 			
 			
-			Locator.assetsManager.addEventListener(AssetsManagerEvents.ASSETS_COMPLETE, Locator.game.startGame);
+			Locator.assetsManager.addEventListener(AssetsManagerEvents.ASSETS_COMPLETE, Locator.game.loadMenu);
 			
 		}
 	}

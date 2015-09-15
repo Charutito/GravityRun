@@ -13,16 +13,25 @@ package
 		public var Runner:Player;
 		private var _controller:UserController;
 		
+		
 		private var _cam:Camera;
+		private var _menu:Menu;
 		
 		public function Game()
 		{
-			
+			this._menu = new Menu();
+		}
+		
+		public function loadMenu(e:Event):void
+		{
+			this._menu.addMenu();
 		}
 
 		public function startGame(event:Event):void
 		{
-
+			//remuevo el menu
+			this._menu.removeMenu();
+			
 			Runner = new Player();
 			Runner.spawn();
 			
