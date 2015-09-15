@@ -130,8 +130,10 @@ package Engine.Console
 			trace("Abriendo Consola...");
 			this._isOpened = true;
 			Locator.mainStage.addChild(this._model);
-			this._model.x = Locator.mainStage.width/2;
-			this._model.y = Locator.mainStage.height/2;
+			
+			//Aca tire fruta despues lo arreglamos bien:
+			this._model.x = 512;
+			this._model.y = 384;
 			Locator.mainStage.focus = this._model.tb_input;
 		}
 		
