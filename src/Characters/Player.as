@@ -1,4 +1,4 @@
-package
+package Characters
 {
 	import Engine.Locator;
 	
@@ -21,37 +21,38 @@ package
 		
 		public function Player()
 		{
+			
 		}
 		
 		public function spawn():void
 		{
-			model = Locator.assetsManager.getMovieClip("MC_hero");
-			Locator.mainStage.addChild(model);	
+			this.model = Locator.assetsManager.getMovieClip("MC_hero");
+			Locator.game.containerLevel.addChild(this.model);	
 			
-			model.x = 70;
-			model.y = 500;	
+			this.model.x = 70;
+			this.model.y = 500;	
 			
-			model.mc_hitDown.alpha = 0;
-			model.mc_hitCenter.alpha = 0;
+			this.model.mc_hitDown.alpha = 0;
+			this.model.mc_hitCenter.alpha = 0;
 		}
 		
 		public function update():void
 		{
-			model.x += _velocityX;
-			model.y += _velocityY;
-			_velocityY += _gravityY * _weight;
+			this.model.x += this._velocityX;
+			this.model.y += this._velocityY;
+			this._velocityY += this._gravityY * this._weight;
 			
 			for(var i:int=0; i<Game.allPlatforms.length; i++)
 			{
-				if(_velocityY > 0)
+				if(this._velocityY > 0)
 				{
-					if(model.mc_hitDown.hitTestObject( Game.allPlatforms[i] ))
+					if(this.model.mc_hitDown.hitTestObject( Game.allPlatforms[i] ))
 					{
-						_velocityY = 0;
-						model.y = Game.allPlatforms[i].y - model.mc_hitCenter.height /2;
-						_isJumping = false;
+						this._velocityY = 0;
+						this.model.y = Game.allPlatforms[i].y - this.model.mc_hitCenter.height /2;
+						this._isJumping = false;
 						
-						if(_velocityX == 0)
+						if(this._velocityX == 0)
 						{
 							changeAnimation("idle");
 						}
@@ -59,22 +60,22 @@ package
 				}
 			}
 			
-			if(_velocityY > 0)
+			if(this._velocityY > 0)
 			{
 				changeAnimation("fall");
 			}
 			
 			//Igualo acá la velocidad en X a cero si quiero que el personaje se DEJE de mover al final de cada frame.
-			_velocityX = 0;
+			this._velocityX = 0;
 		}
 		
 		
 		public function jump():void
 		{
-			if(!_isJumping)
+			if(!this._isJumping)
 			{
-				_velocityY = -(_forceJump * _weight);
-				_isJumping = true;
+				this._velocityY = -(this._forceJump *this._weight);
+				this._isJumping = true;
 				changeAnimation("jump");
 			}
 		}

@@ -1,4 +1,4 @@
-package
+package Characters
 {
 	import Engine.Locator;
 	

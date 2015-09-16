@@ -1,25 +1,37 @@
 package
 {
+	import Engine.Camera.Camera;
 	import Engine.Locator;
 	
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.ui.Keyboard;
+	import Characters.UserController;
+	import Characters.Player;
+	import Screens.Level01;
+	import Screens.Menu;
 
 	public class Game
 	{
 		public var Runner:Player;
 		private var _controller:UserController;
+		private var _camera:Camera;
 		
 		private var _menu:Menu;
 		
-		private var _level:Level01;		
+		private var _level:Level01;
+		
 		public static var allPlatforms:Vector.<MovieClip> = new Vector.<MovieClip>();
+		
+		//Containers...
+		public var containerLevel:MovieClip;
 		
 		public function Game()
 		{
 			this._menu = new Menu();
+			this._camera = new Camera();
+			this.containerLevel = new MovieClip();
 		}
 		
 		public function loadMenu(e:Event):void
@@ -31,19 +43,23 @@ package
 		{
 			//remuevo el menu
 			this._menu.removeMenu();
+			Locator.mainStage.addChild(this.containerLevel);
+			this._camera.addToView(this.containerLevel);
+			this._camera.on();
 
 			
-			_level = new Level01();
-			_level.init();
+			this._level = new Level01();
+			this._level.init();
 			
 			Runner = new Player();
 			Runner.spawn();
 			Locator.mainStage.focus = Locator.mainStage;
 			
-			_level.initCapa1();
+			this._level.initCapa1();
 			initializeLevel();
+			
 
-			_controller = new UserController(Runner, Keyboard.SPACE);
+			this._controller = new UserController(Runner, Keyboard.SPACE);
 
 			Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
 
@@ -51,12 +67,12 @@ package
 		
 		public function initializeLevel():void
 		{
-			for(var i:int=0; i<_level.model.numChildren; i++)
+			for(var i:int=0; i<this._level.model.numChildren; i++)
 			{
-				if(_level.model.getChildAt(i).name == "hit_platform")
+				if(this._level.model.getChildAt(i).name == "hit_platform")
 				{
-					allPlatforms.push( _level.model.getChildAt(i) );
-					_level.model.getChildAt(i).alpha = 0;
+					allPlatforms.push( this._level.model.getChildAt(i) );
+					this._level.model.getChildAt(i).alpha = 0;
 				}
 			}
 		}
@@ -66,8 +82,9 @@ package
 		{
 			Runner.update();
 			Runner.move();
+			this._camera.lookAt(this.Runner.model.mc_hitCenter);
 			
-			_controller.Update();
+			this._controller.Update();
 
 		}		
 	}
