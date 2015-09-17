@@ -24,7 +24,7 @@ package Screens
 				if(this.model.getChildAt(i).name == "hit_platform")
 				{
 					allPlatforms.push( this.model.getChildAt(i) );
-					this.model.getChildAt(i).alpha = 0;
+					//this.model.getChildAt(i).alpha = 0;
 				}
 			}
 		}

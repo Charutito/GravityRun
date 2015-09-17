@@ -9,6 +9,7 @@ package Characters
 		private var _objectControlled:Player;
 		
 		public var KeyCodeUp:int;
+		
 		private var _goUp:Boolean;
 		
 		
@@ -21,7 +22,7 @@ package Characters
 			_objectControlled = p;
 			
 			this.KeyCodeUp = KeyCodeUp;
-			
+
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, evKeyDown);
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, evKeyUp);
 
@@ -47,6 +48,7 @@ package Characters
 				case KeyCodeUp:
 					_goUp = false;
 					break;
+				
 			}
 		}
 		
@@ -57,6 +59,7 @@ package Characters
 				case KeyCodeUp:
 					_goUp = true;
 					break;
+
 			}
 			
 		}

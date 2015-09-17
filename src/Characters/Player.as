@@ -65,6 +65,8 @@ package Characters
 			
 			//Igualo acá la velocidad en X a cero si quiero que el personaje se DEJE de mover al final de cada frame.
 			this._velocityX = 0;
+			
+			trace(this._velocityY);
 		}
 		
 		
@@ -77,6 +79,7 @@ package Characters
 				changeAnimation("jump");
 			}
 		}
+
 		
 		public function changeAnimation(name:String):void
 		{
