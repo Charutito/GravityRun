@@ -50,7 +50,7 @@ package
 		
 		public function get player():Player
 		{
-			return this._char;	
+			return this._char;
 		}
 		
 		public function startGame(event:Event):void
@@ -65,7 +65,7 @@ package
 			
 			this._char.spawn();
 			Locator.mainStage.focus = Locator.mainStage;
-			
+	
 			this._level.initCapa1();
 			this._level.getPlatforms();
 

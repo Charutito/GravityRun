@@ -7,9 +7,13 @@ package Engine.Console
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.text.engine.Kerning;
 	import flash.ui.Keyboard;
+	import flash.ui.Mouse;
 	import flash.utils.Dictionary;
+	
+	import flashx.textLayout.events.ScrollEvent;
 
 	public class Console
 	{
@@ -17,14 +21,27 @@ package Engine.Console
 		private var _isOpened:Boolean;
 		private var _allCommands:Dictionary = new Dictionary();
 		
+		
 		public function Console()
 		{
 			this._model = new MCConsole();
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, evKeyDown);
+			this._model.upArrow.addEventListener(MouseEvent.CLICK, evScrollUp);
+			this._model.downArrow.addEventListener(MouseEvent.CLICK, evScrollDown);
 			registerCommand("help", showHelp, "Muestra los comandos disponibles.");
 			registerCommand("cls", clear, "Limpia el log de la consola.");
 			registerCommand("exit", exit, "Cierra la aplicacion.");
 			registerCommand("quit", exit, "Cierra la aplicacion.");
+		}
+		
+		public function evScrollUp(e:MouseEvent):void
+		{
+			this._model.tb_log.scrollV--;
+		}
+		
+		public function evScrollDown(e:MouseEvent):void
+		{
+			this._model.tb_log.scrollV++;
 		}
 		
 		protected function evKeyDown(event:KeyboardEvent):void
@@ -39,6 +56,7 @@ package Engine.Console
 			{
 				exec();
 			}
+			
 		}
 
 		public function registerCommand(name:String, command:Function, description:String):void
