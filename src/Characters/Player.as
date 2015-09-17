@@ -17,8 +17,6 @@ package Characters
 		private var _isJumping:Boolean;
 		private var _movementSpeed:Number = 5;
 		
-		public var game:Game;
-		
 		public function Player()
 		{
 			
@@ -42,14 +40,14 @@ package Characters
 			this.model.y += this._velocityY;
 			this._velocityY += this._gravityY * this._weight;
 			
-			for(var i:int=0; i<Game.allPlatforms.length; i++)
+			for(var i:int=0; i<Locator.game.level.allPlatforms.length; i++)
 			{
 				if(this._velocityY > 0)
 				{
-					if(this.model.mc_hitDown.hitTestObject( Game.allPlatforms[i] ))
+					if(this.model.mc_hitDown.hitTestObject( Locator.game.level.allPlatforms[i] ))
 					{
 						this._velocityY = 0;
-						this.model.y = Game.allPlatforms[i].y - this.model.mc_hitCenter.height /2;
+						this.model.y = Locator.game.level.allPlatforms[i].y - this.model.mc_hitCenter.height /2;
 						this._isJumping = false;
 						
 						if(this._velocityX == 0)

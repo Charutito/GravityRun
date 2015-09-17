@@ -1,28 +1,28 @@
 package
 {
+	import Characters.Player;
+	import Characters.UserController;
+	
 	import Engine.Camera.Camera;
 	import Engine.Locator;
+	
+	import Screens.Level;
+	import Screens.Menu;
 	
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.ui.Keyboard;
-	import Characters.UserController;
-	import Characters.Player;
-	import Screens.Level01;
-	import Screens.Menu;
 
 	public class Game
 	{
-		public var Runner:Player;
+		private var _char:Player;
 		private var _controller:UserController;
 		private var _camera:Camera;
 		
 		private var _menu:Menu;
 		
-		private var _level:Level01;
-		
-		public static var allPlatforms:Vector.<MovieClip> = new Vector.<MovieClip>();
+		private var _level:Level;
 		
 		//Containers...
 		public var containerLevel:MovieClip;
@@ -32,13 +32,27 @@ package
 			this._menu = new Menu();
 			this._camera = new Camera();
 			this.containerLevel = new MovieClip();
+			this._level = new Level();
+			this._char = new Player();
 		}
 		
 		public function loadMenu(e:Event):void
 		{
 			this._menu.addMenu();
 		}
-
+		
+		//Getters...
+		
+		public function get level():Level
+		{
+			return this._level;
+		}
+		
+		public function get player():Player
+		{
+			return this._char;	
+		}
+		
 		public function startGame(event:Event):void
 		{
 			//remuevo el menu
@@ -46,43 +60,27 @@ package
 			Locator.mainStage.addChild(this.containerLevel);
 			this._camera.addToView(this.containerLevel);
 			this._camera.on();
-
 			
-			this._level = new Level01();
 			this._level.init();
 			
-			Runner = new Player();
-			Runner.spawn();
+			this._char.spawn();
 			Locator.mainStage.focus = Locator.mainStage;
 			
 			this._level.initCapa1();
-			initializeLevel();
-			
+			this._level.getPlatforms();
 
-			this._controller = new UserController(Runner, Keyboard.SPACE);
+			this._controller = new UserController(this._char, Keyboard.SPACE);
 
 			Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
 
 		}
 		
-		public function initializeLevel():void
-		{
-			for(var i:int=0; i<this._level.model.numChildren; i++)
-			{
-				if(this._level.model.getChildAt(i).name == "hit_platform")
-				{
-					allPlatforms.push( this._level.model.getChildAt(i) );
-					this._level.model.getChildAt(i).alpha = 0;
-				}
-			}
-		}
-		
 		
 		protected function evUpdate(event:Event):void
 		{
-			Runner.update();
-			Runner.move();
-			this._camera.lookAt(this.Runner.model.mc_hitCenter);
+			_char.update();
+			_char.move();
+			this._camera.lookAt(this._char.model.mc_hitCenter);
 			
 			this._controller.Update();
 

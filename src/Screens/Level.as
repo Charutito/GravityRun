@@ -4,16 +4,36 @@ package Screens
 	
 	import flash.display.MovieClip;
 
-	public class Level01
+	public class Level
 	{
 		public var model:MovieClip;
 		private var _capa1:MovieClip;
+		
+		public var allPlatforms:Vector.<MovieClip> = new Vector.<MovieClip>();
 			
 		
-		public function Level01()
+		public function Level()
 		{
 			
 		}
+		
+		public function getPlatforms():void
+		{
+			for(var i:int=0; i<this.model.numChildren; i++)
+			{
+				if(this.model.getChildAt(i).name == "hit_platform")
+				{
+					allPlatforms.push( this.model.getChildAt(i) );
+					this.model.getChildAt(i).alpha = 0;
+				}
+			}
+		}
+		
+		public function locateElements():void
+		{
+			
+		}
+			
 		
 		public function init():void
 		{

@@ -30,7 +30,7 @@ package Engine.Camera
 			var camPoint:Point = this._view.globalToLocal(globalPosition);
 			
 			x = (camPoint.x + target.width / 2) * zoom - Locator.mainStage.stageWidth / 2;
-			y = (camPoint.y + target.height / 2) * zoom - Locator.mainStage.stageHeight / 2;
+			//y = (camPoint.y + target.height / 2) * zoom - Locator.mainStage.stageHeight / 2;
 		}
 		
 		
