@@ -33,6 +33,30 @@ package Screens
 			this._menuModel.btn_credits.addEventListener(MouseEvent.CLICK, addCredits);
 		}
 		
+/*		public function add(name:String):void
+		{
+			this._menuModel = Locator.assetsManager.getMovieClip(name);
+			Locator.mainStage.addChild(this._menuModel);
+			this._menuModel.x = Locator.mainStage.stageWidth/2;
+			this._menuModel.y = Locator.mainStage.stageHeight/2;
+			//Listeners...
+			switch(name)
+			{
+				case "MC_menu":
+					this._menuModel.btn_startGame.addEventListener(MouseEvent.CLICK, Locator.game.startGame);
+					this._menuModel.btn_HTP.addEventListener(MouseEvent.CLICK, this.add("MC_howToPlay"));
+					this._menuModel.btn_credits.addEventListener(MouseEvent.CLICK, this.add("MC_credits"));
+					break;
+				case "MC_howToPlay":
+					this._htpModel.btn_back.addEventListener(MouseEvent.CLICK, removeHTP);
+					break;
+				case "MC_credits":
+					this._creditsModel.btn_back.addEventListener(MouseEvent.CLICK, removeCredits);
+					break;
+			}
+			trace("El add cargo: " + name);
+		}*/
+		
 		public function removeMenu():void
 		{
 			//Saco los listeners y remuevo el menu...
@@ -53,7 +77,7 @@ package Screens
 			this._htpModel.y = Locator.mainStage.stageHeight/2;
 			Locator.mainStage.addChild(this._htpModel);
 			this._htpModel.btn_back.addEventListener(MouseEvent.CLICK, removeHTP);
-			
+	
 		}
 		
 		public function removeHTP(e:MouseEvent):void
