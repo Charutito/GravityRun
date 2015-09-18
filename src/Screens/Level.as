@@ -1,5 +1,8 @@
 package Screens
 {
+	import Collectables.Collectables;
+	import Collectables.Diamond;
+	
 	import Engine.Locator;
 	
 	import flash.display.MovieClip;
@@ -10,6 +13,8 @@ package Screens
 		private var _capa1:MovieClip;
 		
 		public var allPlatforms:Vector.<MovieClip> = new Vector.<MovieClip>();
+		
+		private var _diamond:Collectables;
 			
 		
 		public function Level()
@@ -31,7 +36,8 @@ package Screens
 		
 		public function locateElements():void
 		{
-			
+			this._diamond = new Diamond();
+			this._diamond.spawn(700,500);
 		}
 			
 		

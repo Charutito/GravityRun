@@ -17,6 +17,8 @@ package Characters
 		private var _isJumping:Boolean;
 		private var _movementSpeed:Number = 5;
 		
+		public var totalDiamond:int = 0;
+		
 		public function Player()
 		{
 			
@@ -35,6 +37,32 @@ package Characters
 		}
 		
 		public function update():void
+		{			
+			gravity();
+			checkCollision();
+		}
+		
+		
+		public function jump():void
+		{
+			if(!this._isJumping)
+			{
+				this._velocityY = -(this._forceJump *this._weight);
+				this._isJumping = true;
+				changeAnimation("jump");
+			}
+		}
+		
+		
+		public function changeAnimation(name:String):void
+		{
+			if(model.currentLabel != name)
+			{
+				model.gotoAndPlay(name);
+			}
+		}
+		
+		public function gravity():void
 		{
 			this.model.x += this._velocityX;
 			this.model.y += this._velocityY;
@@ -65,30 +93,7 @@ package Characters
 			
 			//Igualo acá la velocidad en X a cero si quiero que el personaje se DEJE de mover al final de cada frame.
 			this._velocityX = 0;
-			
-			trace(this._velocityY);
 		}
-		
-		
-		public function jump():void
-		{
-			if(!this._isJumping)
-			{
-				this._velocityY = -(this._forceJump *this._weight);
-				this._isJumping = true;
-				changeAnimation("jump");
-			}
-		}
-
-		
-		public function changeAnimation(name:String):void
-		{
-			if(model.currentLabel != name)
-			{
-				model.gotoAndPlay(name);
-			}
-		}
-		
 		
 		public function move():void
 		{
@@ -100,6 +105,20 @@ package Characters
 			}
 		}
 		
+		public function addDiamond():void
+		{
+			totalDiamond++
+		}
 		
+		public function checkCollision():void
+		{
+			for (var i:int = Locator.game.containerLevel.numChildren - 1; i >= 0; i--)
+			{
+				var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
+				
+				if(temp.name == ("Diamond") && this.model.hitTestObject(temp))
+					Locator.game.collectables.destroy(temp);					
+			}
+		}			
 	}
 }

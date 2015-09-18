@@ -1,1 +1,1 @@
-hero=movies/hero.swf&level01=movies/Level01.swf&menu=movies/menu.swf
+hero=movies/hero.swf&level01=movies/Level01.swf&menu=movies/menu.swf&collectables=movies/Collectables.swf&GUI=movies/GUI.swf
