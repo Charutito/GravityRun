@@ -83,7 +83,7 @@ package
 			this._level.initCapa1();
 			this._level.getPlatforms();
 
-			this._controller = new UserController(this._char, Keyboard.SPACE);
+			this._controller = new UserController(this._char, Keyboard.SPACE, Keyboard.A);
 
 			Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
 			
@@ -94,11 +94,10 @@ package
 			
 		}
 		
-		
 		protected function evUpdate(event:Event):void
 		{
-			_char.update();
-			_char.move();
+			this._char.update();
+			this._char.move();
 			this._camera.lookAt(this._char.model.mc_hitCenter);
 			
 			this._controller.Update();

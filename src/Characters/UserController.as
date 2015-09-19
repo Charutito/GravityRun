@@ -9,19 +9,22 @@ package Characters
 		private var _objectControlled:Player;
 		
 		public var KeyCodeUp:int;
+		public var keyGravity:int;
 		
 		private var _goUp:Boolean;
+		private var _changeGravity:Boolean;
 		
 		
 		/** Configura los controles de movimiento.
 		 * 
 		 * @param p Player a controlar.
 		 * @param KeyCodeUp Tecla para saltar. */
-		public function UserController(p:Player, KeyCodeUp:int)
+		public function UserController(p:Player, KeyCodeUp:int, keyGravity:int)
 		{
 			_objectControlled = p;
 			
 			this.KeyCodeUp = KeyCodeUp;
+			this.keyGravity = keyGravity;
 
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, evKeyDown);
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, evKeyUp);
@@ -39,6 +42,7 @@ package Characters
 			{
 				_objectControlled.jump();
 			}
+		
 		}
 		
 		protected function evKeyUp(event:KeyboardEvent):void
@@ -48,7 +52,8 @@ package Characters
 				case KeyCodeUp:
 					_goUp = false;
 					break;
-				
+				case keyGravity:
+					Locator.game.player.gravityStatus = false;
 			}
 		}
 		
@@ -59,9 +64,10 @@ package Characters
 				case KeyCodeUp:
 					_goUp = true;
 					break;
+				case keyGravity:
+					Locator.game.player.gravityStatus = true;
 
 			}
-			
 		}
 	}
 }

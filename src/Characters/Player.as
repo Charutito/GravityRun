@@ -16,7 +16,7 @@ package Characters
 		private var _forceJump:Number = 2.5;
 		private var _isJumping:Boolean;
 		private var _movementSpeed:Number = 5;
-		
+		public var gravityStatus:Boolean = true
 		public var totalDiamond:int = 0;
 		
 		public function Player()
@@ -34,11 +34,16 @@ package Characters
 			
 			this.model.mc_hitDown.alpha = 0;
 			this.model.mc_hitCenter.alpha = 0;
+			
 		}
 		
 		public function update():void
-		{			
-			gravity();
+		{		
+			if(this.gravityStatus)
+				gravity(1);
+			else
+				gravity(-1);
+			
 			checkCollision();
 		}
 		
@@ -62,10 +67,10 @@ package Characters
 			}
 		}
 		
-		public function gravity():void
+		public function gravity(dir:Number):void
 		{
-			this.model.x += this._velocityX;
-			this.model.y += this._velocityY;
+			this.model.x += this._velocityX * dir;
+			this.model.y += this._velocityY * dir;
 			this._velocityY += this._gravityY * this._weight;
 			
 			for(var i:int=0; i<Locator.game.level.allPlatforms.length; i++)
@@ -80,7 +85,7 @@ package Characters
 						
 						if(this._velocityX == 0)
 						{
-							changeAnimation("idle");
+							changeAnimation("idle");	
 						}
 					}
 				}
@@ -117,7 +122,7 @@ package Characters
 				var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
 				
 				if(temp.name == ("Diamond") && this.model.hitTestObject(temp))
-					Locator.game.collectables.destroy(temp);					
+					Locator.game.collectables.destroy(temp);
 			}
 		}			
 	}
