@@ -21,7 +21,7 @@ package Characters
 		 * @param KeyCodeUp Tecla para saltar. */
 		public function UserController(p:Player, KeyCodeUp:int, keyGravity:int)
 		{
-			_objectControlled = p;
+			this._objectControlled = p;
 			
 			this.KeyCodeUp = KeyCodeUp;
 			this.keyGravity = keyGravity;
@@ -38,9 +38,9 @@ package Characters
 		
 		public function checkKeys():void
 		{
-			if(_goUp)
+			if(this._goUp)
 			{
-				_objectControlled.jump();
+				this._objectControlled.jump();
 			}
 		
 		}
@@ -50,10 +50,8 @@ package Characters
 			switch(event.keyCode)
 			{
 				case KeyCodeUp:
-					_goUp = false;
+					this._goUp = false;
 					break;
-				case keyGravity:
-					Locator.game.player.gravityStatus = false;
 			}
 		}
 		
@@ -62,10 +60,11 @@ package Characters
 			switch(event.keyCode)
 			{
 				case KeyCodeUp:
-					_goUp = true;
+					this._goUp = true;
 					break;
 				case keyGravity:
-					Locator.game.player.gravityStatus = true;
+					Locator.game.player.gravityStatus = !Locator.game.player.gravityStatus;
+					break;
 
 			}
 		}
