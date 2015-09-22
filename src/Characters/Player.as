@@ -16,13 +16,13 @@ package Characters
 		private var _forceJump:Number = 2.5;
 		private var _isJumping:Boolean;
 		private var _movementSpeed:Number = 5;
-		public var gravityStatus:Boolean = true;
-		private var _canChangeGravity:Boolean = false;
+		private var _gravityStatus:Boolean = true;
+		private var _canChangeGravity:Boolean = true;
 		public var totalDiamond:int = 0;
 		
 		public function Player()
 		{
-			
+				
 		}
 		
 		public function spawn():void
@@ -40,12 +40,13 @@ package Characters
 		
 		public function update():void
 		{		
-				if(this.gravityStatus)
+				if(this._gravityStatus)
 					gravity(1);
 				else
 					gravity(-1);
 
 			checkCollision();
+			checkPlatforms();
 		}
 		
 		
@@ -53,7 +54,7 @@ package Characters
 		{
 			if(!this._isJumping)
 			{
-				this._velocityY = -(this._forceJump *this._weight);
+				this._velocityY = -(this._forceJump * this._weight);
 				this._isJumping = true;
 				changeAnimation("jump");
 			}
@@ -65,32 +66,19 @@ package Characters
 				model.gotoAndPlay(name);
 		}
 		
-		//Le agregue el parametro direccion para cambiar la gravedad, solo se aplica en Y...
 		public function gravity(dir:Number):void
 		{
-			
-			//DIVIDE & CONQUER!!!!
 			//Muevo el pj en la velocidad multiplacada por su peso.
 			this.model.x += this._velocityX;
 			this.model.y += this._velocityY * dir;
-			this._velocityY += this._gravityY * this._weight;
-			trace(this._velocityY);
-			
-			//Separe el chequeo de plataformas a otro metodo.
-			checkPlatforms();
-			
-			if(this._velocityY > 0)
-				changeAnimation("fall");
-						
-			//Igualo acá la velocidad en X a cero si quiero que el personaje se DEJE de mover al final de cada frame.
-			this._velocityX = 0;
+			this._velocityY += this._gravityY * this._weight;			
 		}
 		
-		// IMPORTANTE: LO QUE DIGO QUE ES PARA PENSAR ES LO SIGUIENTE:
-		// ACA NO FUNCIONA BIEN LA GRAVEDAD POR QUE SIEMPRE ESTA TOCANDO LAS PLATFORMS
-		// PERO EN LAMANERA QUE DEBERIAMOS HACERLO, NO VA A ESTAR TOCANDO PLATFORMS, SI NO QUE VA A ESTAR
-		// TOCANDO EL "PORTAL", ASI QUE PUEDE QUE ANDE.
-		// Creo yo! jajaja
+		public function changeGravity():void
+		{
+			if(this._canChangeGravity)
+				this._gravityStatus = !this._gravityStatus;	
+		}
 		
 		public function checkPlatforms():void
 		{
@@ -103,12 +91,7 @@ package Characters
 					{
 						this._velocityY = 0;
 						this.model.y = Locator.game.level.allPlatforms[i].y - this.model.mc_hitCenter.height / 2;
-						this._isJumping = false;
-						//Este boolean _canChangeGravity es una prueba, creo que no esta operativo.
-						this._canChangeGravity = true;
-						
-						if(this._velocityX == 0)
-							changeAnimation("idle");	
+						this._isJumping = false;	
 					}
 				}
 			}
@@ -120,6 +103,9 @@ package Characters
 			
 			if(!_isJumping)
 				changeAnimation("run");
+			
+			if( (this._velocityY > 0 ) && this._canChangeGravity)
+				changeAnimation("fall");
 		}
 		
 		public function addDiamond():void
@@ -135,6 +121,12 @@ package Characters
 				
 				if(temp.name == ("Diamond") && this.model.hitTestObject(temp))
 					Locator.game.collectables.destroy(temp);
+				if(temp.name == ("Portal") && this.model.hitTestObject(temp) )
+				{
+					changeGravity();
+					this._canChangeGravity = false;
+					changeAnimation("gravity");
+				}
 			}
 		}			
 	}

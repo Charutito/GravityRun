@@ -1,4 +1,4 @@
-package Collectables
+package General
 {
 	import Engine.Locator;
 

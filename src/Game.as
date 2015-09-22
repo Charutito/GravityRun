@@ -3,7 +3,7 @@ package
 	import Characters.Player;
 	import Characters.UserController;
 	
-	import Collectables.Collectables;
+	import General.Collectables;
 	
 	import Engine.Camera.Camera;
 	import Engine.Locator;
@@ -83,7 +83,7 @@ package
 			this._level.initCapa1();
 			this._level.getPlatforms();
 
-			this._controller = new UserController(this._char, Keyboard.SPACE, Keyboard.A);
+			this._controller = new UserController(this._char, Keyboard.SPACE);
 
 			Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
 			

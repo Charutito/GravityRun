@@ -1,9 +1,11 @@
 package Screens
 {
-	import Collectables.Collectables;
-	import Collectables.Diamond;
+	import General.Collectables;
+	import General.Diamond;
 	
 	import Engine.Locator;
+	
+	import General.Portal;
 	
 	import flash.display.MovieClip;
 
@@ -38,6 +40,12 @@ package Screens
 		{
 			this._diamond = new Diamond();
 			this._diamond.spawn(700,500);
+			
+			var portal_1:Portal = new Portal();
+			var portal_2:Portal = new Portal();
+			
+			portal_1.spawn(1000,600);
+			portal_2.spawn(1700, 75);
 		}
 			
 		
@@ -53,7 +61,5 @@ package Screens
 			_capa1 = Locator.assetsManager.getMovieClip("MC_Level01_capa1");
 			Locator.game.containerLevel.addChild(_capa1);	
 		}
-
-		
 	}
 }
