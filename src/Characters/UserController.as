@@ -35,9 +35,11 @@ package Characters
 		
 		public function checkKeys():void
 		{
-			if(this._goUp)
+			if(this._goUp && this._objectControlled._canJump)
 			{
+				this._objectControlled._canJump = false;
 				this._objectControlled.jump();
+				trace("saltoo");
 			}
 		
 		}
@@ -59,7 +61,6 @@ package Characters
 				case KeyCodeUp:
 					this._goUp = true;
 					break;
-
 			}
 		}
 	}
