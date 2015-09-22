@@ -97,7 +97,7 @@ package
 		protected function evUpdate(event:Event):void
 		{
 			this._char.update();
-			this._char.move();
+			this._char.move(1);
 			this._camera.lookAt(this._char.model.mc_hitCenter);
 			
 			this._controller.Update();
