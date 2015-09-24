@@ -19,6 +19,11 @@ package Screens
 
 		}
 		
+		public function get menuModel():MovieClip
+		{
+			return this._menuModel;
+		}
+		
 		public function addMenu():void
 		{
 			trace("Agregando menu...");

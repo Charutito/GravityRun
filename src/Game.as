@@ -3,18 +3,22 @@ package
 	import Characters.Player;
 	import Characters.UserController;
 	
-	import General.Collectables;
-	
 	import Engine.Camera.Camera;
 	import Engine.Locator;
+	
+	import General.Collectables;
 	
 	import Screens.GUI;
 	import Screens.Level;
 	import Screens.Menu;
+	import Screens.WinAndLose;
 	
+	import flash.desktop.NativeApplication;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.net.dns.AAAARecord;
 	import flash.ui.Keyboard;
 
 	public class Game
@@ -70,7 +74,9 @@ package
 		public function startGame(event:Event):void
 		{
 			//remuevo el menu
+			//if(Locator.mainStage.contains(this._menu.menuModel))
 			this._menu.removeMenu();
+			
 			Locator.mainStage.addChild(this.containerLevel);
 			this._camera.addToView(this.containerLevel);
 			this._camera.on();
@@ -92,6 +98,33 @@ package
 			containerGUI.init(900,40);
 			containerGUI.model.counter.text = "0"
 			
+		}
+		
+		public function addResult(name:String):void
+		{
+			var res:WinAndLose = new WinAndLose();
+			res.add(name);
+		}
+		
+		public function restartGame(e:MouseEvent):void
+		{
+			Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
+			for(var i:int=0; i<this.containerLevel.numChildren; i++)
+			{
+				this.containerLevel.removeChildAt(i);	
+			}
+			
+			for(var j:int=0; j<Locator.mainStage.numChildren;j++)
+			{
+				Locator.mainStage.removeChildAt(j);
+			}
+			loadMenu(e);
+			
+		}
+		
+		public function endGame(e:MouseEvent):void
+		{
+			NativeApplication.nativeApplication.exit(0);
 		}
 		
 		protected function evUpdate(event:Event):void

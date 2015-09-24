@@ -55,6 +55,10 @@ package Characters
 			checkCollision();
 			checkPlatforms();
 			move(this._changeDir);
+			
+			if( this._model.mc_hitCenter.hitTestObject(Locator.game.level.deathtrap) )
+				die();
+	
 		}
 		
 		public function jump():void
@@ -85,7 +89,7 @@ package Characters
 					
 					this._changeDir = 1;
 				}
-			}	
+			}
 			
 			for(var x:int=0; x<Locator.game.level.allPlatformsUp.length; x++)
 			{
@@ -113,6 +117,12 @@ package Characters
 		public function addDiamond():void
 		{
 			totalDiamond++;
+		}
+		
+		public function die():void
+		{
+			Locator.game.containerLevel.removeChild(this._model);
+			Locator.game.addResult("MC_Lose");
 		}
 		
 		public function checkCollision():void
