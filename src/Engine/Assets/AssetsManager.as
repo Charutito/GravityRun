@@ -28,11 +28,11 @@ package Engine.Assets
 		private var _allNamesForLoad:Array = new Array();
 		private var _numAssetsLoaded:int = 0;
 		private var _numTotalAssets:int = 0;
-		private var _preloadModel:MovieClip;
+		public var preloadModel:MovieClip;
 		
 		public function AssetsManager()
 		{
-			this._preloadModel = new MC_Preload();
+			this.preloadModel = new MC_Preload();
 			trace("Starting AssetsManager...");
 		}
 		
@@ -57,10 +57,10 @@ package Engine.Assets
 			
 			this._numTotalAssets = this._allLinksForLoad.length;
 			loadAsset( this._allLinksForLoad[0] );
-			Locator.mainStage.addChild(this._preloadModel);
-			this._preloadModel.x = Locator.mainStage.stageWidth/2;
-			this._preloadModel.y = Locator.mainStage.stageHeight/2;
-			this._preloadModel.gotoAndStop(1);
+			Locator.mainStage.addChild(this.preloadModel);
+			this.preloadModel.x = Locator.mainStage.stageWidth/2;
+			this.preloadModel.y = Locator.mainStage.stageHeight/2;
+			this.preloadModel.gotoAndStop(1);
 		}
 		
 		public function loadAsset(path:String):void
@@ -101,7 +101,7 @@ package Engine.Assets
 		protected function evProgress(event:ProgressEvent):void
 		{
 			var percentLoaded:int = event.bytesLoaded * 100 / event.bytesTotal;
-			this._preloadModel.gotoAndStop(percentLoaded);
+			this.preloadModel.gotoAndStop(percentLoaded);
 		}
 		
 		protected function evError(event:IOErrorEvent):void
@@ -113,7 +113,7 @@ package Engine.Assets
 		{	
 			this._numAssetsLoaded++;
 			var percentTotal:int = this._numAssetsLoaded * 100 / this._numTotalAssets;
-			this._preloadModel.gotoAndStop(percentTotal);
+			this.preloadModel.gotoAndStop(percentTotal);
 			
 			//Remove asset Event
 			event.currentTarget.removeEventListener(Event.COMPLETE, evAssetComplete);
@@ -125,7 +125,7 @@ package Engine.Assets
 			}
 			else
 			{
-				Locator.mainStage.removeChild(this._preloadModel);
+				Locator.mainStage.removeChild(this.preloadModel);
 				dispatchEvent( new AssetsManagerEvents(AssetsManagerEvents.ASSETS_COMPLETE) ) ;
 			}
 		}
@@ -173,6 +173,5 @@ package Engine.Assets
 			}
 			return null;
 		}
-		
 	}
 }

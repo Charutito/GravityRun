@@ -48,13 +48,7 @@ package
 			this.containerGUI = new GUI();
 		}
 		
-		public function loadMenu(e:Event):void
-		{
-			this._menu.addMenu();
-		}
-		
 		//Getters...
-		
 		public function get level():Level
 		{
 			return this._level;
@@ -69,6 +63,12 @@ package
 			
 		{
 			return this._collectables;
+		}
+		
+		
+		public function loadMenu(e:Event):void
+		{
+			this._menu.addMenu();
 		}
 		
 		public function startGame(event:Event):void
@@ -109,15 +109,19 @@ package
 		public function restartGame(e:MouseEvent):void
 		{
 			Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
-			for(var i:int=0; i<this.containerLevel.numChildren; i++)
+		/*	for(var i:int=0; i<this.containerLevel.numChildren; i++)
 			{
-				this.containerLevel.removeChildAt(i);	
+				this.containerLevel.removeChildAt(i);
+				trace("Removi de containerLevel a: " + this.containerLevel.getChildAt(i).name);
 			}
 			
 			for(var j:int=0; j<Locator.mainStage.numChildren;j++)
 			{
 				Locator.mainStage.removeChildAt(j);
-			}
+				trace("Removi de mainStage a: " + Locator.mainStage.getChildAt(j).name);
+			}*/
+			this.containerLevel.removeChildren();
+			Locator.mainStage.removeChildren();
 			loadMenu(e);
 			
 		}
@@ -132,10 +136,10 @@ package
 			this._char.update();
 			//this._char.move(1);
 			this._camera.lookAt(this._char.model.mc_hitCenter);
-			
 			this._controller.Update();
-			
-			containerGUI.model.counter.text = this._char.totalDiamond;	
+			this.containerGUI.model.counter.text = this._char.totalDiamond;	
+			trace("Children de mainStage: " + Locator.mainStage.numChildren);
+			trace("Children de containerLevel: " + this.containerLevel.numChildren);
 		}		
 	}
 }
