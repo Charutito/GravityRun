@@ -21,7 +21,6 @@ package Characters
 		public function UserController(p:Player, KeyCodeUp:int)
 		{
 			this._objectControlled = p;
-			
 			this.KeyCodeUp = KeyCodeUp;
 
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, evKeyDown);
@@ -39,9 +38,7 @@ package Characters
 			{
 				this._objectControlled._canJump = false;
 				this._objectControlled.jump();
-				trace("saltoo");
 			}
-		
 		}
 		
 		protected function evKeyUp(event:KeyboardEvent):void

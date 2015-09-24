@@ -17,14 +17,14 @@ package Characters
 		
 		public var totalDiamond:int;
 		
-		private var changeDir:Number;	
+		private var _changeDir:Number;	
 		
 		
 		public function Player()
 		{
 			this._speedX = 5;
 			this._speedY = 0;
-			this._jumpForce = -12;
+			this._jumpForce = -13;
 			this._canJump = true;
 			this._gravity = 1;
 			this._canChangeGravity = true;
@@ -43,9 +43,8 @@ package Characters
 			this._model.x = 70;
 			this._model.y = 500;	
 			
-			//this._model.mc_hitDown.alpha = 0;
-			this._model.mc_hitCenter.alpha = 0;
-			
+			this._model.mc_hitDown.alpha = 0;
+			this._model.mc_hitCenter.alpha = 0;	
 		}
 		
 		public function update():void
@@ -55,8 +54,7 @@ package Characters
 			
 			checkCollision();
 			checkPlatforms();
-			move(changeDir);
-			
+			move(this._changeDir);
 		}
 		
 		public function jump():void
@@ -85,7 +83,7 @@ package Characters
 					this._canJump = true;
 					this._canChangeGravity = true;
 					
-					changeDir = 1;
+					this._changeDir = 1;
 				}
 			}	
 			
@@ -94,13 +92,13 @@ package Characters
 				if(this._model.mc_hitDown.hitTestObject(Locator.game.level.allPlatformsUp[x]))
 				{
 					//Hardcodeo del amor ya que el movie toca constantemente la plataforma y no te deja saltar
-					this._model.y = Locator.game.level.allPlatformsUp[x].y + 80; //Locator.game.level.allPlatforms[i].height;  
+					this._model.y = Locator.game.level.allPlatformsUp[x].y + 70; //Locator.game.level.allPlatforms[i].height;  
 					
 					this._speedY = 0;
 					this._canJump = true;
 					this._canChangeGravity = true;
 					
-					changeDir = -1;
+					this._changeDir = -1;
 				}
 			}	
 		}
@@ -110,14 +108,11 @@ package Characters
 			this._model.x += this._speedX * dir;
 			if(this._canJump)
 				changeAnimation("run");
-			
-		/*	if( (this._velocityY > 0 ) && this._canChangeGravity)
-				changeAnimation("fall");*/
 		}
 		
 		public function addDiamond():void
 		{
-			totalDiamond++
+			totalDiamond++;
 		}
 		
 		public function checkCollision():void
@@ -136,7 +131,10 @@ package Characters
 						this._model.x = temp.x;
 						this._canChangeGravity = false;
 						changeAnimation("gravity");
-						//this._model.rotation = 180;
+						this._model.scaleY *= -1;
+						this._model.scaleX *= -1;
+						this._changeDir = 0;
+						this._canJump = false;	
 				}
 			}
 		}			

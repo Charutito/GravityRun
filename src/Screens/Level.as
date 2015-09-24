@@ -1,48 +1,46 @@
 package Screens
 {
+	import Engine.Locator;	
 	import General.Collectables;
 	import General.Diamond;
-	
-	import Engine.Locator;
-	
 	import General.Portal;
-	
 	import flash.display.MovieClip;
 
 	public class Level
 	{
-		public var model:MovieClip;
+		private var _model:MovieClip;
 		private var _capa1:MovieClip;
+		private var _diamond:Collectables;
 		
 		public var allPlatformsDown:Vector.<MovieClip> = new Vector.<MovieClip>();
 		public var allPlatformsUp:Vector.<MovieClip> = new Vector.<MovieClip>();
-		
-		private var _diamond:Collectables;
-			
-		
+
 		public function Level()
 		{
 			
 		}
 		
+		public function get model():MovieClip
+		{
+			return this._model;	
+		}
+		
 		public function getPlatforms():void
 		{
-			for(var i:int=0; i<this.model.numChildren; i++)
+			for(var i:int=0; i<this._model.numChildren; i++)
 			{
-				if(this.model.getChildAt(i).name == "hit_platformDOWN")
+				if(this._model.getChildAt(i).name == "hit_platformDOWN")
 				{
-					allPlatformsDown.push( this.model.getChildAt(i) );
-					//this.model.getChildAt(i).alpha = 0;
+					allPlatformsDown.push( this._model.getChildAt(i) );
+					this.model.getChildAt(i).alpha = 0;
 				}
 				
-				if(this.model.getChildAt(i).name == "hit_platformUP")
+				if(this._model.getChildAt(i).name == "hit_platformUP")
 				{
-					allPlatformsUp.push( this.model.getChildAt(i) );
-					//this.model.getChildAt(i).alpha = 0;
+					allPlatformsUp.push( this._model.getChildAt(i) );
+					this.model.getChildAt(i).alpha = 0;
 				}
 			}
-			
-
 		}
 		
 		public function locateElements():void
@@ -52,23 +50,23 @@ package Screens
 			
 			var portal_1:Portal = new Portal();
 			var portal_2:Portal = new Portal();
+			var portal_3:Portal = new Portal();
 			
 			portal_1.spawn(1000,700);
-			portal_2.spawn(500, 70);
+			portal_2.spawn(430, 70);
+			portal_3.spawn(2400, 700);
 		}
 			
-		
 		public function init():void
 		{
-			model = Locator.assetsManager.getMovieClip("MC_Level01_model");
-			Locator.game.containerLevel.addChild(model);	
-
+			this._model = Locator.assetsManager.getMovieClip("MC_Level01_model");
+			Locator.game.containerLevel.addChild(this._model);	
 		}
 		
 		public function initCapa1():void
 		{
-			_capa1 = Locator.assetsManager.getMovieClip("MC_Level01_capa1");
-			Locator.game.containerLevel.addChild(_capa1);	
+			this._capa1 = Locator.assetsManager.getMovieClip("MC_Level01_capa1");
+			Locator.game.containerLevel.addChild(this._capa1);	
 		}
 	}
 }
