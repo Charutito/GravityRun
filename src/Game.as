@@ -33,6 +33,7 @@ package
 		
 		private var _collectables:Collectables;
 		
+		public var updateables:Array;
 		//Containers...
 		public var containerLevel:MovieClip;
 		public var containerGUI:GUI;
@@ -46,6 +47,7 @@ package
 			this._char = new Player();
 			this._collectables = new Collectables();
 			this.containerGUI = new GUI();
+			this.updateables = new Array();
 		}
 		
 		//Getters...
@@ -60,7 +62,6 @@ package
 		}
 		
 		public function get collectables():Collectables
-			
 		{
 			return this._collectables;
 		}
@@ -81,6 +82,8 @@ package
 			this._camera.addToView(this.containerLevel);
 			this._camera.on();
 			
+			this._level.initCapa3();
+			
 			this._level.init();
 			
 			this._char.spawn();
@@ -97,7 +100,6 @@ package
 			
 			containerGUI.init(900,40);
 			containerGUI.model.counter.text = "0"
-			
 		}
 		
 		public function addResult(name:String):void
@@ -109,21 +111,9 @@ package
 		public function restartGame(e:MouseEvent):void
 		{
 			Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
-		/*	for(var i:int=0; i<this.containerLevel.numChildren; i++)
-			{
-				this.containerLevel.removeChildAt(i);
-				trace("Removi de containerLevel a: " + this.containerLevel.getChildAt(i).name);
-			}
-			
-			for(var j:int=0; j<Locator.mainStage.numChildren;j++)
-			{
-				Locator.mainStage.removeChildAt(j);
-				trace("Removi de mainStage a: " + Locator.mainStage.getChildAt(j).name);
-			}*/
 			this.containerLevel.removeChildren();
 			Locator.mainStage.removeChildren();
 			loadMenu(e);
-			
 		}
 		
 		public function endGame(e:MouseEvent):void
@@ -133,13 +123,14 @@ package
 		
 		protected function evUpdate(event:Event):void
 		{
+			for(var i:int=0; i<updateables.length; i++)
+			{
+				updateables[i].update();
+			}
 			this._char.update();
-			//this._char.move(1);
 			this._camera.lookAt(this._char.model.mc_hitCenter);
-			this._controller.Update();
+			this._controller.update();
 			this.containerGUI.model.counter.text = this._char.totalDiamond;	
-			trace("Children de mainStage: " + Locator.mainStage.numChildren);
-			trace("Children de containerLevel: " + this.containerLevel.numChildren);
 		}		
 	}
 }

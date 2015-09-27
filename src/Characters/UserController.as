@@ -22,12 +22,12 @@ package Characters
 		{
 			this._objectControlled = p;
 			this.KeyCodeUp = KeyCodeUp;
-
+			//Locator.game.updateables.push(this);
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, evKeyDown);
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, evKeyUp);
 		}
 		
-		public function Update():void
+		public function update():void
 		{
 			checkKeys();
 		}

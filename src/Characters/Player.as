@@ -1,5 +1,7 @@
 package Characters
 {
+	import Enemies.Bullet;
+	
 	import Engine.Locator;
 	
 	import flash.display.MovieClip;
@@ -28,6 +30,7 @@ package Characters
 			this._canJump = true;
 			this._gravity = 1;
 			this._canChangeGravity = true;
+			this.totalDiamond = 0;
 		}
 		
 		public function get model():MovieClip
@@ -39,7 +42,7 @@ package Characters
 		{
 			this._model = Locator.assetsManager.getMovieClip("MC_hero");
 			Locator.game.containerLevel.addChild(this._model);	
-			
+			//Locator.game.updateables.push(this);
 			this._model.x = 70;
 			this._model.y = 500;	
 			
@@ -58,6 +61,8 @@ package Characters
 			
 			if( this._model.mc_hitCenter.hitTestObject(Locator.game.level.deathtrap) )
 				die();
+			
+			
 	
 		}
 		
@@ -123,6 +128,7 @@ package Characters
 		{
 			Locator.game.containerLevel.removeChild(this._model);
 			Locator.game.addResult("MC_Lose");
+			
 		}
 		
 		public function checkCollision():void
@@ -144,7 +150,13 @@ package Characters
 						this._model.scaleY *= -1;
 						this._model.scaleX *= -1;
 						this._changeDir = 0;
-						this._canJump = false;	
+						this._canJump = false;
+				}
+				if(temp is Bullet && this._model.hitTestObject(temp) )
+				{
+					temp.destroy();
+					die();
+					trace("ME PEGARON MAMA");
 				}
 			}
 		}			

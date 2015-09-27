@@ -1,5 +1,7 @@
 package Screens
 {
+	import Enemies.EnemyShoot;
+	
 	import Engine.Locator;
 	
 	import General.Collectables;
@@ -13,6 +15,7 @@ package Screens
 	{
 		private var _model:MovieClip;
 		private var _capa1:MovieClip;
+		private var _capa3:MovieClip;
 		private var _diamond:Collectables;
 		private var _deathtrap:Sprite;
 		
@@ -66,6 +69,10 @@ package Screens
 			portal_2.spawn(430, 70);
 			portal_3.spawn(2400, 700);
 			
+			//Enemies...
+			var en1:EnemyShoot = new EnemyShoot();
+			en1.spawn(1300, 700);
+			
 			generateDeathtrap();
 		}
 		
@@ -85,6 +92,12 @@ package Screens
 			Locator.mainStage.addChild(this._deathtrap);
 		}
 		
+		public function initCapa3():void
+		{
+			this._capa3 = Locator.assetsManager.getMovieClip("MC_Level01_capa3");
+			Locator.game.containerLevel.addChild(this._capa3);
+		}
+		
 		public function init():void
 		{
 			this._model = Locator.assetsManager.getMovieClip("MC_Level01_model");
@@ -96,5 +109,7 @@ package Screens
 			this._capa1 = Locator.assetsManager.getMovieClip("MC_Level01_capa1");
 			Locator.game.containerLevel.addChild(this._capa1);	
 		}
+		
+		
 	}
 }
