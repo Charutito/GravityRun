@@ -48,7 +48,7 @@ package Screens
 				if(this._model.getChildAt(i).name == "hit_platformUP")
 				{
 					allPlatformsUp.push( this._model.getChildAt(i) );
-					this.model.getChildAt(i).alpha = 0;
+					 this.model.getChildAt(i).alpha = 0;
 				}
 			}
 		}
