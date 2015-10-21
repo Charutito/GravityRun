@@ -2,10 +2,12 @@ package Enemies
 {
 	import Engine.Locator;
 	
+	import Interfaces.IDestroyable;
+	
 	import flash.display.MovieClip;
 	import flash.net.dns.AAAARecord;
 
-	public class Bullet
+	public class Bullet implements IDestroyable
 	{
 		private var _model:MovieClip;
 		private var _bulletSpeed:Number;

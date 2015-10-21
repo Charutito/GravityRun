@@ -1,15 +1,16 @@
 package General
 {
 	import Engine.Locator;
-	
+	import Interfaces.IDestroyable;
 	import flash.display.MovieClip;
 
-	public class Collectables
+	public class Collectables implements IDestroyable
 	{
 		public var model:MovieClip;
 		
 		public function Collectables()
 		{
+			
 		}
 		
 		public function spawn(posX:int, posY:int):void
@@ -19,11 +20,11 @@ package General
 			this.model.y = posY;			
 		}
 		
-		
-		public function destroy(elem:MovieClip):void
+		public function destroy():void
 		{
-			Locator.game.containerLevel.removeChild(elem);
+			Locator.game.containerLevel.removeChild(this.model);
 			Locator.game.player.addDiamond();
+			this.model = null;
 		}
 	}
 }

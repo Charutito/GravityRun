@@ -1,6 +1,7 @@
 package General
 {
 	import Engine.Locator;
+	import Interfaces.IDestroyable;
 
 	public class Diamond extends Collectables
 	{
@@ -10,6 +11,6 @@ package General
 			this.model.scaleX = 0.7;
 			this.model.scaleY = 0.7;
 			this.model.name = "Diamond";
-		}		
+		}
 	}
 }

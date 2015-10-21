@@ -2,9 +2,11 @@ package Enemies
 {
 	import Engine.Locator;
 	
+	import Interfaces.IDestroyable;
+	
 	import flash.display.MovieClip;
 	
-	public class BaseEnemy
+	public class BaseEnemy implements IDestroyable
 	{
 		public var model:MovieClip;
 		

@@ -8,15 +8,16 @@ package Screens
 	import General.Diamond;
 	import General.Portal;
 	
+	import Interfaces.IDestroyable;
+	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 
-	public class Level
+	public class Level implements IDestroyable
 	{
 		private var _model:MovieClip;
 		private var _capa1:MovieClip;
 		private var _capa3:MovieClip;
-		private var _diamond:Collectables;
 		private var _deathtrap:Sprite;
 		
 		public var allPlatformsDown:Vector.<MovieClip> = new Vector.<MovieClip>();
@@ -58,8 +59,8 @@ package Screens
 		
 		public function locateElements():void
 		{
-			this._diamond = new Diamond();
-			this._diamond.spawn(700,500);
+			var diamond:Diamond = new Diamond();
+			diamond.spawn(700,500);
 			
 			var portal_1:Portal = new Portal();
 			var portal_2:Portal = new Portal();
@@ -110,6 +111,9 @@ package Screens
 			Locator.game.containerLevel.addChild(this._capa1);	
 		}
 		
-		
+		public function destroy():void
+		{
+			
+		}
 	}
 }

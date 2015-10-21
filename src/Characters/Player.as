@@ -4,9 +4,11 @@ package Characters
 	
 	import Engine.Locator;
 	
+	import Interfaces.IDestroyable;
+	
 	import flash.display.MovieClip;
 	
-	public class Player
+	public class Player implements IDestroyable
 	{
 		
 		private var _model:MovieClip
@@ -61,12 +63,9 @@ package Characters
 			
 			if( this._model.mc_hitCenter.hitTestObject(Locator.game.level.deathtrap) )
 				die();
-			
-			
-	
 		}
 		
-		public function jump():void
+		public function jump():void 
 		{
 			this._canJump = false;
 			this._speedY = this._jumpForce;
@@ -138,7 +137,7 @@ package Characters
 				var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
 				
 				if(temp.name == ("Diamond") && this._model.hitTestObject(temp))
-					Locator.game.collectables.destroy(temp);
+					temp.destroy();
 				if(temp.name == ("Portal") && this._model.hitTestObject(temp) && this._canChangeGravity)
 				{
 						trace("Colisione con un portal...");
@@ -159,6 +158,11 @@ package Characters
 					trace("ME PEGARON MAMA");
 				}
 			}
-		}			
+		}
+		
+		public function destroy():void
+		{
+			
+		}
 	}
 }
