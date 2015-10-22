@@ -26,6 +26,11 @@ package Enemies
 			return this._model;
 		}
 		
+		public function getModel():MovieClip
+		{
+			return this._model;
+		}
+		
 		public function get bulletSpeed():Number
 		{
 			return this._bulletSpeed;
@@ -55,11 +60,15 @@ package Enemies
 		public function destroy():void
 		{
 			Locator.game.containerLevel.removeChild(this._model);
+			
 			var index:int = Locator.game.updateables.indexOf(this)
 			Locator.game.updateables.splice(index, 1);
 			
 			var indexBullet:int = this._allBullets.indexOf(this._model);
 			this._allBullets.splice(indexBullet, 1);
+			
+			var indexDestroy:int = Locator.game.allDestroys.indexOf(this);
+			Locator.game.allDestroys.splice(index, 1);
 		}
 	}
 }

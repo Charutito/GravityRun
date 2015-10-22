@@ -23,6 +23,7 @@ package Screens
 		public var allPlatformsDown:Vector.<MovieClip> = new Vector.<MovieClip>();
 		public var allPlatformsUp:Vector.<MovieClip> = new Vector.<MovieClip>();
 
+
 		public function Level()
 		{
 			this._deathtrap = null;
@@ -59,12 +60,14 @@ package Screens
 		
 		public function locateElements():void
 		{
+			Locator.game.allDestroys.push(this);
 			var diamond:Diamond = new Diamond();
 			diamond.spawn(700,500);
 			
 			var portal_1:Portal = new Portal();
 			var portal_2:Portal = new Portal();
 			var portal_3:Portal = new Portal();
+
 			
 			portal_1.spawn(1000,700);
 			portal_2.spawn(430, 70);
@@ -111,9 +114,15 @@ package Screens
 			Locator.game.containerLevel.addChild(this._capa1);	
 		}
 		
+		public function getModel():MovieClip
+		{
+			return this._model;
+		}
+		
 		public function destroy():void
 		{
-			
+			var index:int = Locator.game.allDestroys.indexOf(this);
+			Locator.game.allDestroys.splice(index, 1);
 		}
 	}
 }

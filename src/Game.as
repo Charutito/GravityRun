@@ -8,6 +8,8 @@ package
 	
 	import General.Collectables;
 	
+	import Interfaces.IDestroyable;
+	
 	import Screens.GUI;
 	import Screens.Level;
 	import Screens.Menu;
@@ -37,6 +39,9 @@ package
 		//Containers...
 		public var containerLevel:MovieClip;
 		public var containerGUI:GUI;
+		
+		//Probando probando 1...2...3...
+		public var allDestroys:Vector.<IDestroyable> = new Vector.<IDestroyable>();
 		
 		public function Game()
 		{

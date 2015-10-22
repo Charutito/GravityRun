@@ -4,6 +4,9 @@ package Characters
 	
 	import Engine.Locator;
 	
+	import General.Diamond;
+	import General.Portal;
+	
 	import Interfaces.IDestroyable;
 	
 	import flash.display.MovieClip;
@@ -44,6 +47,7 @@ package Characters
 		{
 			this._model = Locator.assetsManager.getMovieClip("MC_hero");
 			Locator.game.containerLevel.addChild(this._model);	
+			Locator.game.allDestroys.push(this);
 			//Locator.game.updateables.push(this);
 			this._model.x = 70;
 			this._model.y = 500;	
@@ -132,7 +136,7 @@ package Characters
 		
 		public function checkCollision():void
 		{
-			for (var i:int = Locator.game.containerLevel.numChildren - 1; i >= 0; i--)
+			/*for (var i:int = Locator.game.containerLevel.numChildren - 1; i >= 0; i--)
 			{
 				var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
 				
@@ -157,12 +161,41 @@ package Characters
 					die();
 					trace("ME PEGARON MAMA");
 				}
+			}*/
+			trace("chequeando colisiones...");
+			for each(var element in IDestroyable)
+			{
+				if(element is Diamond && this._model.hitTestObject(element.getModel) )
+					element.destroy();
+				else if(element is Portal && this._model.hitTestObject(element.getModel) )
+				{
+					trace("Colisione con un portal...");
+					this._gravity = this._gravity * -1;
+					this._model.y = element.getModel.y + (element.getModel.height * this._gravity);
+					this._model.x = element.getModel.x;
+					this._canChangeGravity = false;
+					changeAnimation("gravity");
+					this._model.scaleY *= -1;
+					this._model.scaleX *= -1;
+					this._changeDir = 0;
+					this._canJump = false;
+				}else if( element is Bullet && this._model.hitTestObject(element.getModel) )
+				{
+					element.destroy();
+					die();
+					trace("Colision con bullet...");
+				}
 			}
+		}
+		
+		public function getModel():MovieClip
+		{
+			return this._model;	
 		}
 		
 		public function destroy():void
 		{
-			
+			//Patente Pendiente...
 		}
 	}
 }

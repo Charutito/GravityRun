@@ -19,14 +19,22 @@ package Enemies
 		{
 			Locator.game.containerLevel.addChild(this.model);
 			Locator.game.updateables.push(this);
+			Locator.game.allDestroys.push(this);
 			this.model.x = posX;
 			this.model.y = posY;
 			
 		}
 		
+		public function getModel():MovieClip
+		{
+			return this.model;
+		}
+		
 		public function destroy():void
 		{
 			Locator.game.containerLevel.removeChild(this.model);
+			var index:int = Locator.game.allDestroys.indexOf(this);
+			Locator.game.allDestroys.splice(index, 1);
 		}
 	}
 }
