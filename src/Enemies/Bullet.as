@@ -52,6 +52,7 @@ package Enemies
 			Locator.game.containerLevel.addChild(this._model);
 			Locator.game.updateables.push(this);
 			this._allBullets.push(this._model);
+			Locator.game.allDestroys.push(this);
 			this._model.x = posX;
 			this._model.y = posY;
 			

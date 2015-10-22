@@ -162,7 +162,7 @@ package Characters
 					trace("ME PEGARON MAMA");
 				}
 			}*/
-			trace("chequeando colisiones...");
+			
 			for each(var element in Locator.game.allDestroys)
 			{
 				if(element is Diamond && this._model.hitTestObject(element.getModel()) )
