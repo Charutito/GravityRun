@@ -163,26 +163,26 @@ package Characters
 				}
 			}*/
 			trace("chequeando colisiones...");
-			for each(var element in IDestroyable)
+			for each(var element in Locator.game.allDestroys)
 			{
-				if(element is Diamond && this._model.hitTestObject(element.getModel) )
+				if(element is Diamond && this._model.hitTestObject(element.getModel()) )
 					element.destroy();
-				else if(element is Portal && this._model.hitTestObject(element.getModel) )
+				else if(element is Portal && this._model.hitTestObject(element.getModel()) )
 				{
 					trace("Colisione con un portal...");
 					this._gravity = this._gravity * -1;
-					this._model.y = element.getModel.y + (element.getModel.height * this._gravity);
-					this._model.x = element.getModel.x;
+					this._model.y = element.getModel().y + (element.getModel().height * this._gravity);
+					this._model.x = element.getModel().x;
 					this._canChangeGravity = false;
 					changeAnimation("gravity");
 					this._model.scaleY *= -1;
 					this._model.scaleX *= -1;
 					this._changeDir = 0;
 					this._canJump = false;
-				}else if( element is Bullet && this._model.hitTestObject(element.getModel) )
+				}else if( element is Bullet && this._model.hitTestObject(element.getModel()) )
 				{
 					element.destroy();
-					die();
+					//die();
 					trace("Colision con bullet...");
 				}
 			}
