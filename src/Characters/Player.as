@@ -10,6 +10,7 @@ package Characters
 	import Interfaces.IDestroyable;
 	
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	
 	public class Player implements IDestroyable
 	{
@@ -29,7 +30,7 @@ package Characters
 		
 		public function Player()
 		{
-			this._speedX = 5;
+			this._speedX = 6;
 			this._speedY = 0;
 			this._jumpForce = -13;
 			this._canJump = true;
@@ -162,12 +163,14 @@ package Characters
 					trace("ME PEGARON MAMA");
 				}
 			}*/
-			
 			for each(var element in Locator.game.allDestroys)
 			{
 				if(element is Diamond && this._model.hitTestObject(element.getModel()) )
 					element.destroy();
-				else if(element is Portal && this._model.hitTestObject(element.getModel()) )
+				
+				// Saque esto al carajo porque sino se rompe todooooo!!!
+				
+/*				else if(element is Portal && this._model.hitTestObject(element.getModel()) )
 				{
 					trace("Colisione con un portal...");
 					this._gravity = this._gravity * -1;
@@ -179,11 +182,34 @@ package Characters
 					this._model.scaleX *= -1;
 					this._changeDir = 0;
 					this._canJump = false;
-				}else if( element is Bullet && this._model.hitTestObject(element.getModel()) )
+				}*/
+				
+				else if( element is Bullet && this._model.hitTestObject(element.getModel()) )
 				{
 					element.destroy();
 					//die();
 					trace("Colision con bullet...");
+				}
+			}
+			
+			// Collision con los portales
+			for (var i:int = Locator.game.containerLevel.numChildren - 1; i >= 0; i--)
+			{
+				var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
+				
+				if(temp.name == ("Portal") && this._model.hitTestObject(temp.hitbox_p) && this._canChangeGravity)
+				{
+					trace("Colisione con un portal...");
+					this._gravity = this._gravity * -1;
+					this._model.y = temp.y + (temp.height * this._gravity);
+					this._model.x = temp.x;
+					this._canChangeGravity = false;
+					changeAnimation("gravity");
+					temp.gotoAndPlay("change");
+					this._model.scaleY *= -1;
+					this._model.scaleX *= -1;
+					this._changeDir = 0;
+					this._canJump = false;
 				}
 			}
 		}

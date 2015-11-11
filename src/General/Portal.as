@@ -23,6 +23,7 @@ package General
 		{
 			return this._model;
 		}
+		
 		public function spawn(posX:Number, posY:Number):void
 		{
 			Locator.game.containerLevel.addChild(this._model);

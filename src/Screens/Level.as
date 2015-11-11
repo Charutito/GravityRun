@@ -67,10 +67,10 @@ package Screens
 			var portal_1:Portal = new Portal();
 			var portal_2:Portal = new Portal();
 			var portal_3:Portal = new Portal();
-
 			
-			portal_1.spawn(1000,700);
-			portal_2.spawn(430, 70);
+			portal_1.spawn(1000,620);
+			portal_2.spawn(350, 90);
+			portal_2.model.rotationX = 180;
 			portal_3.spawn(2400, 700);
 			
 			//Enemies...

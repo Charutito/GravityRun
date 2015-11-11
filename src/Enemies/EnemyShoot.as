@@ -17,7 +17,7 @@ package Enemies
 
 			
 			//Timers...
-			this._timeToShoot = 1500;
+			this._timeToShoot = 1700;
 			this._currentTimeToShoot = this._timeToShoot;
 			
 		}
