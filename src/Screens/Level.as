@@ -18,6 +18,10 @@ package Screens
 		private var _model:MovieClip;
 		private var _capa1:MovieClip;
 		private var _capa3:MovieClip;
+		private var _capaInicio:MovieClip;
+		
+		private var _model2:MovieClip;
+		private var _capa3_2:MovieClip;
 		private var _deathtrap:Sprite;
 		
 		public var allPlatformsDown:Vector.<MovieClip> = new Vector.<MovieClip>();
@@ -56,6 +60,21 @@ package Screens
 					 this.model.getChildAt(i).alpha = 0;
 				}
 			}
+			
+			for(var a:int=0; a<this._model2.numChildren; a++)
+			{
+				if(this._model2.getChildAt(a).name == "hit_platformDOWN")
+				{
+					allPlatformsDown.push( this._model2.getChildAt(a) );
+					this._model2.getChildAt(a).alpha = 0;
+				}
+				
+				if(this._model2.getChildAt(a).name == "hit_platformUP")
+				{
+					allPlatformsUp.push( this._model2.getChildAt(a) );
+					this._model2.getChildAt(a).alpha = 0;
+				}
+			}
 		}
 		
 		public function locateElements():void
@@ -67,11 +86,13 @@ package Screens
 			var portal_1:Portal = new Portal();
 			var portal_2:Portal = new Portal();
 			var portal_3:Portal = new Portal();
+			var portal_4:Portal = new Portal();
 			
 			portal_1.spawn(1000,620);
 			portal_2.spawn(350, 90);
 			portal_2.model.rotationX = 180;
 			portal_3.spawn(2400, 700);
+			portal_4.spawn(4300, 620);
 			
 			//Enemies...
 			var en1:EnemyShoot = new EnemyShoot();
@@ -96,6 +117,9 @@ package Screens
 			Locator.mainStage.addChild(this._deathtrap);
 		}
 		
+		//=======================
+		//Primera Parte del level
+		//=======================
 		public function initCapa3():void
 		{
 			this._capa3 = Locator.assetsManager.getMovieClip("MC_Level01_capa3");
@@ -112,6 +136,33 @@ package Screens
 		{
 			this._capa1 = Locator.assetsManager.getMovieClip("MC_Level01_capa1");
 			Locator.game.containerLevel.addChild(this._capa1);	
+		}
+		
+		public function initCapaInicio():void
+		{
+			this._capaInicio = Locator.assetsManager.getMovieClip("MC_CapaInicio");
+			Locator.game.containerLevel.addChild(this._capaInicio);	
+			this._capaInicio.x = -800;
+			this._capaInicio.y = 0;
+		}
+		
+		// ======================
+		//Segunda Parte del Level
+		//=======================
+		public function init2Capa3():void
+		{
+			this._capa3_2 = Locator.assetsManager.getMovieClip("MC_Level01_2_capa3");
+			Locator.game.containerLevel.addChild(this._capa3_2);
+			this._capa3_2.x = this._model.width;
+			this._capa3_2.y = 0;
+		}
+		
+		public function init2():void
+		{
+			this._model2 = Locator.assetsManager.getMovieClip("MC_Level01_2_model");
+			Locator.game.containerLevel.addChild(this._model2);	
+			this._model2.x = this._model.width;
+			this._model2.y = 0;
 		}
 		
 		public function getModel():MovieClip

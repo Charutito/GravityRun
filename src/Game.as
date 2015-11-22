@@ -32,7 +32,7 @@ package
 		private var _menu:Menu;
 		
 		private var _level:Level;
-		
+		private var _res:WinAndLose;
 		private var _collectables:Collectables;
 		
 		public var updateables:Array;
@@ -53,6 +53,7 @@ package
 			this._collectables = new Collectables();
 			this.containerGUI = new GUI();
 			this.updateables = new Array();
+			this._res  = new WinAndLose();
 		}
 		
 		//Getters...
@@ -87,15 +88,25 @@ package
 			this._camera.addToView(this.containerLevel);
 			this._camera.on();
 			
-			this._level.initCapa3();
+			//Parte 1 del Nivel
+			this._level.initCapa3();			
+			this._level.init();	
+
 			
-			this._level.init();
+			//Parte 2 del nivel
+			this._level.init2Capa3();
+			this._level.init2();
+			
+			//Plataformas
+			this._level.getPlatforms();
 			
 			this._char.spawn();
 			Locator.mainStage.focus = Locator.mainStage;
-	
+			
+			//Capas exteriores
 			this._level.initCapa1();
-			this._level.getPlatforms();
+			this._level.initCapaInicio();
+
 
 			this._controller = new UserController(this._char, Keyboard.SPACE);
 
@@ -109,15 +120,19 @@ package
 		
 		public function addResult(name:String):void
 		{
-			var res:WinAndLose = new WinAndLose();
-			res.add(name);
+			this._res.add(name);
 		}
 		
 		public function restartGame(e:MouseEvent):void
 		{
 			Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
-			this.containerLevel.removeChildren();
-			Locator.mainStage.removeChildren();
+			//this.containerLevel.removeChildren();
+			//Locator.mainStage.removeChildren();
+			for each(var elem in IDestroyable)
+				elem.destroy();
+			if(this._res != null)	
+				this._res.remove();
+			
 			loadMenu(e);
 		}
 		

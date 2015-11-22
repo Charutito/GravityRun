@@ -8,6 +8,7 @@ package Engine.Console
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.net.dns.AAAARecord;
 	import flash.text.engine.Kerning;
 	import flash.ui.Keyboard;
 	import flash.ui.Mouse;
@@ -55,6 +56,9 @@ package Engine.Console
 			}else if(this._isOpened && event.keyCode == Keyboard.ENTER)
 			{
 				exec();
+			}else if(this._isOpened && event.keyCode == Keyboard.ESCAPE)
+			{
+				close();				
 			}
 			
 		}
