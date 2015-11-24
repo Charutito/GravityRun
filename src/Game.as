@@ -128,8 +128,11 @@ package
 			Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
 			//this.containerLevel.removeChildren();
 			//Locator.mainStage.removeChildren();
-			for each(var elem in IDestroyable)
+			for each(var elem in this.allDestroys)
+			{
 				elem.destroy();
+			}
+			
 			if(this._res != null)	
 				this._res.remove();
 			
@@ -147,6 +150,7 @@ package
 			{
 				updateables[i].update();
 			}
+			
 			this._char.update();
 			this._camera.lookAt(this._char.model.mc_hitCenter);
 			this._controller.update();

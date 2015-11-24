@@ -35,6 +35,7 @@ package Enemies
 			Locator.game.containerLevel.removeChild(this.model);
 			var index:int = Locator.game.allDestroys.indexOf(this);
 			Locator.game.allDestroys.splice(index, 1);
+			
 		}
 	}
 }

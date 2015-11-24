@@ -49,7 +49,6 @@ package Characters
 			this._model = Locator.assetsManager.getMovieClip("MC_hero");
 			Locator.game.containerLevel.addChild(this._model);	
 			Locator.game.allDestroys.push(this);
-			//Locator.game.updateables.push(this);
 			this._model.x = 70;
 			this._model.y = 500;	
 			
@@ -67,7 +66,7 @@ package Characters
 			move(this._changeDir);
 			
 			if( this._model.mc_hitCenter.hitTestObject(Locator.game.level.deathtrap) )
-				die();
+				destroy();
 		}
 		
 		public function jump():void 
@@ -126,13 +125,6 @@ package Characters
 		public function addDiamond():void
 		{
 			totalDiamond++;
-		}
-		
-		public function die():void
-		{
-			Locator.game.containerLevel.removeChild(this._model);
-			Locator.game.addResult("MC_Lose");
-			
 		}
 		
 		public function checkCollision():void
@@ -221,7 +213,10 @@ package Characters
 		
 		public function destroy():void
 		{
-			//Patente Pendiente...
+			Locator.game.containerLevel.removeChild(this._model);
+			var index:int = Locator.game.allDestroys.indexOf(this);
+			Locator.game.allDestroys.splice(index, 1);
+			Locator.game.addResult("MC_Lose");
 		}
 	}
 }
