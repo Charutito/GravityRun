@@ -49,6 +49,7 @@ package Characters
 			this._model = Locator.assetsManager.getMovieClip("MC_hero");
 			Locator.game.containerLevel.addChild(this._model);	
 			Locator.game.allDestroys.push(this);
+			//Locator.game.updateables.push(this);
 			this._model.x = 70;
 			this._model.y = 500;	
 			
@@ -66,7 +67,7 @@ package Characters
 			move(this._changeDir);
 			
 			if( this._model.mc_hitCenter.hitTestObject(Locator.game.level.deathtrap) )
-				destroy();
+				die();
 		}
 		
 		public function jump():void 
@@ -127,43 +128,51 @@ package Characters
 			totalDiamond++;
 		}
 		
+		public function die():void
+		{
+			Locator.game.containerLevel.removeChild(this._model);
+			this.totalDiamond = 0;
+			Locator.game.addResult("MC_Lose");
+			
+		}
+		
 		public function checkCollision():void
 		{
 			/*for (var i:int = Locator.game.containerLevel.numChildren - 1; i >= 0; i--)
 			{
-				var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
-				
-				if(temp.name == ("Diamond") && this._model.hitTestObject(temp))
-					temp.destroy();
-				if(temp.name == ("Portal") && this._model.hitTestObject(temp) && this._canChangeGravity)
-				{
-						trace("Colisione con un portal...");
-						this._gravity = this._gravity * -1;
-						this._model.y = temp.y + (temp.height * this._gravity);
-						this._model.x = temp.x;
-						this._canChangeGravity = false;
-						changeAnimation("gravity");
-						this._model.scaleY *= -1;
-						this._model.scaleX *= -1;
-						this._changeDir = 0;
-						this._canJump = false;
-				}
-				if(temp is Bullet && this._model.hitTestObject(temp) )
-				{
-					temp.destroy();
-					die();
-					trace("ME PEGARON MAMA");
-				}
+			var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
+			
+			if(temp.name == ("Diamond") && this._model.hitTestObject(temp))
+			temp.destroy();
+			if(temp.name == ("Portal") && this._model.hitTestObject(temp) && this._canChangeGravity)
+			{
+			trace("Colisione con un portal...");
+			this._gravity = this._gravity * -1;
+			this._model.y = temp.y + (temp.height * this._gravity);
+			this._model.x = temp.x;
+			this._canChangeGravity = false;
+			changeAnimation("gravity");
+			this._model.scaleY *= -1;
+			this._model.scaleX *= -1;
+			this._changeDir = 0;
+			this._canJump = false;
+			}
+			if(temp is Bullet && this._model.hitTestObject(temp) )
+			{
+			temp.destroy();
+			die();
+			trace("ME PEGARON MAMA");
+			}
 			}*/
 			for each(var element in Locator.game.allDestroys)
 			{
 				if(element is Diamond && this._model.hitTestObject(element.getModel()) )
 					element.destroy();
-				
-				// Saque esto al carajo porque sino se rompe todooooo!!!
-				
-/*				else if(element is Portal && this._model.hitTestObject(element.getModel()) )
-				{
+					
+					// Saque esto al carajo porque sino se rompe todooooo!!!
+					
+					/*				else if(element is Portal && this._model.hitTestObject(element.getModel()) )
+					{
 					trace("Colisione con un portal...");
 					this._gravity = this._gravity * -1;
 					this._model.y = element.getModel().y + (element.getModel().height * this._gravity);
@@ -174,8 +183,8 @@ package Characters
 					this._model.scaleX *= -1;
 					this._changeDir = 0;
 					this._canJump = false;
-				}*/
-				
+					}*/
+					
 				else if( element is Bullet && this._model.hitTestObject(element.getModel()) )
 				{
 					element.destroy();
@@ -213,10 +222,7 @@ package Characters
 		
 		public function destroy():void
 		{
-			Locator.game.containerLevel.removeChild(this._model);
-			var index:int = Locator.game.allDestroys.indexOf(this);
-			Locator.game.allDestroys.splice(index, 1);
-			Locator.game.addResult("MC_Lose");
+			//Patente Pendiente...
 		}
 	}
 }

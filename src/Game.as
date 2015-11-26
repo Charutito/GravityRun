@@ -3,6 +3,8 @@ package
 	import Characters.Player;
 	import Characters.UserController;
 	
+	import Enemies.Bullet;
+	
 	import Engine.Camera.Camera;
 	import Engine.Locator;
 	
@@ -22,7 +24,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.net.dns.AAAARecord;
 	import flash.ui.Keyboard;
-
+	
 	public class Game
 	{
 		private var _char:Player;
@@ -91,7 +93,7 @@ package
 			//Parte 1 del Nivel
 			this._level.initCapa3();			
 			this._level.init();	
-
+			
 			
 			//Parte 2 del nivel
 			this._level.init2Capa3();
@@ -106,10 +108,10 @@ package
 			//Capas exteriores
 			this._level.initCapa1();
 			this._level.initCapaInicio();
-
-
+			
+			
 			this._controller = new UserController(this._char, Keyboard.SPACE);
-
+			
 			Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
 			
 			this._level.locateElements();
@@ -132,7 +134,8 @@ package
 			{
 				elem.destroy();
 			}
-			
+			this.allDestroys = new Vector.<IDestroyable>();
+			Bullet._allBullets = new Vector.<MovieClip>();
 			if(this._res != null)	
 				this._res.remove();
 			
@@ -146,11 +149,11 @@ package
 		
 		protected function evUpdate(event:Event):void
 		{
+			trace("Updateando...");
 			for(var i:int=0; i<updateables.length; i++)
 			{
 				updateables[i].update();
 			}
-			
 			this._char.update();
 			this._camera.lookAt(this._char.model.mc_hitCenter);
 			this._controller.update();
