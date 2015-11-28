@@ -33,6 +33,7 @@ package Enemies
 		{
 			trace("Enemigo disparo...!!!");
 			var bullet:Bullet = new Bullet();
+			Bullet._allBullets.push(bullet);
 			bullet.add(this.model.x, this.model.y - 75);
 			
 			this._currentTimeToShoot = this._timeToShoot;

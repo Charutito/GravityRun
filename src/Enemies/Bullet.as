@@ -11,13 +11,17 @@ package Enemies
 	{
 		private var _model:MovieClip;
 		private var _bulletSpeed:Number;
-		public static var _allBullets:Vector.<MovieClip> = new Vector.<MovieClip>();
+		private var _timeToDestroy:Number;
+		private var _currentTimeToDestroy:Number;
+		public static var _allBullets:Vector.<Bullet> = new Vector.<Bullet>();
 		
 		public function Bullet()
 		{
 			this._model = new MovieClip();
 			this._model.name = "Bullet";
 			this._bulletSpeed = 6;
+			this._timeToDestroy = 3000;
+			this._currentTimeToDestroy = this._timeToDestroy;
 		}
 		
 		public function get model():MovieClip
@@ -38,12 +42,19 @@ package Enemies
 		public function update():void
 		{
 			move();
+			this._currentTimeToDestroy -= 1000 / Locator.mainStage.frameRate;
+			if(this._currentTimeToDestroy <= 0)
+			{
+				destroy();
+				trace("Bullet destroyed due to lifetime...");
+			}
+				
 		}
 		
 		public function move():void
 		{
 			this._model.x -= bulletSpeed;
-			trace("bala moviendose...");
+			trace("bullet moving...");
 		}
 		
 		public function add(posX:Number, posY:Number):void
@@ -51,7 +62,6 @@ package Enemies
 			this._model = Locator.assetsManager.getMovieClip("MC_Bullet");
 			Locator.game.containerLevel.addChild(this._model);
 			Locator.game.updateables.push(this);
-			_allBullets.push(this._model);
 			Locator.game.allDestroys.push(this);
 			this._model.x = posX;
 			this._model.y = posY;
@@ -66,12 +76,14 @@ package Enemies
 			var index:int = Locator.game.updateables.indexOf(this)
 			Locator.game.updateables.splice(index, 1);
 			
-			var indexBullet:int = _allBullets.indexOf(this._model);
+			var indexBullet:int = _allBullets.indexOf(this);
 			_allBullets.splice(indexBullet, 1);
 			
 			var indexDestroy:int = Locator.game.allDestroys.indexOf(this);
 			Locator.game.allDestroys.splice(indexDestroy, 1);
 			
+			//Seteo el valor del timer en 0 para que vuelva.
+			this._currentTimeToDestroy = this._timeToDestroy;
 			trace(index, indexBullet, indexDestroy);
 		}
 	}

@@ -15,12 +15,14 @@ package
 	import Screens.GUI;
 	import Screens.Level;
 	import Screens.Menu;
+	import Screens.Pause;
 	import Screens.WinAndLose;
 	
 	import flash.desktop.NativeApplication;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.net.dns.AAAARecord;
 	import flash.ui.Keyboard;
@@ -42,6 +44,8 @@ package
 		public var containerLevel:MovieClip;
 		public var containerGUI:GUI;
 		
+		private var _isPaused:Boolean = false;
+		
 		//Probando probando 1...2...3...
 		public var allDestroys:Vector.<IDestroyable> = new Vector.<IDestroyable>();
 		
@@ -56,6 +60,14 @@ package
 			this.containerGUI = new GUI();
 			this.updateables = new Array();
 			this._res  = new WinAndLose();
+			
+			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, evKeyDown); 
+		}
+		
+		protected function evKeyDown(event:KeyboardEvent):void
+		{
+			if(event.keyCode == Keyboard.ESCAPE || event.keyCode == Keyboard.ENTER)
+				pause();
 		}
 		
 		//Getters...
@@ -123,11 +135,12 @@ package
 		public function addResult(name:String):void
 		{
 			this._res.add(name);
+			Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
 		}
 		
 		public function restartGame(e:MouseEvent):void
 		{
-			Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
+			//Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
 			//this.containerLevel.removeChildren();
 			//Locator.mainStage.removeChildren();
 			for each(var elem in this.allDestroys)
@@ -135,16 +148,37 @@ package
 				elem.destroy();
 			}
 			this.allDestroys = new Vector.<IDestroyable>();
-			Bullet._allBullets = new Vector.<MovieClip>();
+			Bullet._allBullets = new Vector.<Bullet>();
+			this.updateables = new Array();
 			if(this._res != null)	
 				this._res.remove();
 			
+			trace("REINICIE JUEGO...");
 			loadMenu(e);
 		}
 		
 		public function endGame(e:MouseEvent):void
 		{
 			NativeApplication.nativeApplication.exit(0);
+		}
+		
+		public function pause():void
+		{
+			trace("Pause...");
+			var pause:Pause = new Pause();
+			if(!this._isPaused)
+			{
+				pause.init();
+				Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
+				this._isPaused = true;
+			}else{
+				Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
+				pause.exit();
+				this._isPaused = false;
+				pause = null;
+			}
+
+			
 		}
 		
 		protected function evUpdate(event:Event):void
@@ -154,7 +188,7 @@ package
 			{
 				updateables[i].update();
 			}
-			this._char.update();
+			//this._char.update();
 			this._camera.lookAt(this._char.model.mc_hitCenter);
 			this._controller.update();
 			this.containerGUI.model.counter.text = this._char.totalDiamond;	

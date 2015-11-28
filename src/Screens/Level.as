@@ -5,6 +5,7 @@ package Screens
 	import Engine.Locator;
 	
 	import General.Collectables;
+	import General.Deathtrap;
 	import General.Diamond;
 	import General.Portal;
 	
@@ -22,7 +23,10 @@ package Screens
 		
 		private var _model2:MovieClip;
 		private var _capa3_2:MovieClip;
-		private var _deathtrap:Sprite;
+		//DeathTrap	
+		public var deathTrap:Deathtrap = new Deathtrap();
+				
+		public var allLevelLayers:Vector.<Sprite> = new Vector.<Sprite>();		
 		
 		public var allPlatformsDown:Vector.<MovieClip> = new Vector.<MovieClip>();
 		public var allPlatformsUp:Vector.<MovieClip> = new Vector.<MovieClip>();
@@ -30,7 +34,7 @@ package Screens
 
 		public function Level()
 		{
-			this._deathtrap = null;
+
 		}
 		
 		//GETTERS....
@@ -38,11 +42,7 @@ package Screens
 		{
 			return this._model;	
 		}
-		
-		public function get deathtrap():Sprite
-		{
-			return this._deathtrap;
-		}
+
 		
 		public function getPlatforms():void
 		{
@@ -87,6 +87,7 @@ package Screens
 			var portal_2:Portal = new Portal();
 			var portal_3:Portal = new Portal();
 			var portal_4:Portal = new Portal();
+			deathTrap.init();
 			
 			portal_1.spawn(1000,620);
 			portal_2.spawn(350, 90);
@@ -98,24 +99,9 @@ package Screens
 			var en1:EnemyShoot = new EnemyShoot();
 			en1.spawn(1300, 700);
 			
-			generateDeathtrap();
+
 		}
 		
-		//ESTOS METODOS SON PARA EL TESTEO CON EL DEATHTRAP
-		public function drawRectangle(x:Number, y:Number, width:Number, height:Number):Sprite
-		{
-			var tmp:Sprite = new Sprite();
-			tmp.graphics.beginFill(0x000000, 1 );
-			tmp.graphics.drawRect(x, y, width, height);
-			tmp.graphics.endFill();
-			return tmp;
-		}
-		
-		public function generateDeathtrap():void
-		{
-			this._deathtrap = drawRectangle(Locator.mainStage.stageWidth/2, Locator.mainStage.stageHeight +200, Locator.mainStage.stageWidth, 200);
-			Locator.mainStage.addChild(this._deathtrap);
-		}
 		
 		//=======================
 		//Primera Parte del level
@@ -124,24 +110,28 @@ package Screens
 		{
 			this._capa3 = Locator.assetsManager.getMovieClip("MC_Level01_capa3");
 			Locator.game.containerLevel.addChild(this._capa3);
+			this.allLevelLayers.push(this._capa3);
 		}
 		
 		public function init():void
 		{
 			this._model = Locator.assetsManager.getMovieClip("MC_Level01_model");
-			Locator.game.containerLevel.addChild(this._model);	
+			Locator.game.containerLevel.addChild(this._model);
+			this.allLevelLayers.push(this._model);
 		}
 		
 		public function initCapa1():void
 		{
 			this._capa1 = Locator.assetsManager.getMovieClip("MC_Level01_capa1");
-			Locator.game.containerLevel.addChild(this._capa1);	
+			Locator.game.containerLevel.addChild(this._capa1);
+			this.allLevelLayers.push(this._capa1);
 		}
 		
 		public function initCapaInicio():void
 		{
 			this._capaInicio = Locator.assetsManager.getMovieClip("MC_CapaInicio");
 			Locator.game.containerLevel.addChild(this._capaInicio);	
+			this.allLevelLayers.push(this._capaInicio);
 			this._capaInicio.x = -800;
 			this._capaInicio.y = 0;
 		}
@@ -153,6 +143,7 @@ package Screens
 		{
 			this._capa3_2 = Locator.assetsManager.getMovieClip("MC_Level01_2_capa3");
 			Locator.game.containerLevel.addChild(this._capa3_2);
+			this.allLevelLayers.push(this._capa3_2);
 			this._capa3_2.x = this._model.width;
 			this._capa3_2.y = 0;
 		}
@@ -161,6 +152,7 @@ package Screens
 		{
 			this._model2 = Locator.assetsManager.getMovieClip("MC_Level01_2_model");
 			Locator.game.containerLevel.addChild(this._model2);	
+			this.allLevelLayers.push(this._model2);
 			this._model2.x = this._model.width;
 			this._model2.y = 0;
 		}
@@ -172,6 +164,10 @@ package Screens
 		
 		public function destroy():void
 		{
+			for each(var elem:Sprite in this.allLevelLayers)
+			{
+				Locator.game.containerLevel.removeChild(elem);
+			}
 			var index:int = Locator.game.allDestroys.indexOf(this);
 			Locator.game.allDestroys.splice(index, 1);
 		}
