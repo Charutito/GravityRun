@@ -17,7 +17,7 @@ package
 		public function Main()
 		{
 			Locator.assetsManager.loadLinks("links01.txt");
-			Locator.assetsManager.addEventListener(AssetsManagerEvents.ASSETS_COMPLETE, Locator.game.loadMenu);	
+			Locator.assetsManager.addEventListener(AssetsManagerEvents.ASSETS_COMPLETE, Locator.game.Showintro);	
 			
 			//Locator.mainStage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			//Locator.mainStage.scaleMode = StageScaleMode.EXACT_FIT;

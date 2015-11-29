@@ -49,6 +49,8 @@ package
 		public var pauseGui:Pause;
 		private var _isPaused:Boolean = false;
 		
+		public var intro:MovieClip; 
+		
 		//Probando probando 1...2...3...
 		public var allDestroys:Vector.<IDestroyable> = new Vector.<IDestroyable>();
 		
@@ -81,6 +83,27 @@ package
 			return this._collectables;
 		}
 		
+		public function Showintro(e:Event):void
+		{
+			intro = new MovieClip();
+			intro = Locator.assetsManager.getMovieClip("MC_Intro");
+			Locator.mainStage.addChild(intro);
+
+			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, quitIntro);
+
+		}
+		
+		protected function quitIntro(event:KeyboardEvent):void
+		{
+			if(event.keyCode == Keyboard.ENTER)
+			{
+				Locator.mainStage.removeEventListener(KeyboardEvent.KEY_UP, quitIntro);
+				Locator.mainStage.removeChild(intro);
+				loadMenu(event);				
+			}
+		}		
+
+
 		
 		public function loadMenu(e:Event):void
 		{
