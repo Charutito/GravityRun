@@ -80,24 +80,62 @@ package Screens
 		public function locateElements():void
 		{
 			Locator.game.allDestroys.push(this);
-			var diamond:Diamond = new Diamond();
-			diamond.spawn(700,500);
 			
+			//Diamonds...
+			var diamond_1:Diamond = new Diamond();
+			var diamond_2:Diamond = new Diamond();
+			var diamond_3:Diamond = new Diamond();
+			var diamond_4:Diamond = new Diamond();
+			var diamond_5:Diamond = new Diamond();
+			var diamond_6:Diamond = new Diamond();
+			var diamond_7:Diamond = new Diamond();
+			var diamond_8:Diamond = new Diamond();
+			var diamond_9:Diamond = new Diamond();
+			var diamond_10:Diamond = new Diamond();
+			var diamond_11:Diamond = new Diamond();
+			var diamond_12:Diamond = new Diamond();
+			
+			
+			
+			diamond_1.spawn(550,400);
+			diamond_2.spawn(1050,450);
+			diamond_3.spawn(1100,550);
+			diamond_4.spawn(3150,650);
+			diamond_5.spawn(3250,650);
+			diamond_6.spawn(3350,650);
+			diamond_7.spawn(3450,650);
+			diamond_8.spawn(3550,650);
+			diamond_9.spawn(4000,450);
+			diamond_10.spawn(4100,400);
+			diamond_11.spawn(4200,400);
+			diamond_12.spawn(4300,450);
+			
+			//Portales..
 			var portal_1:Portal = new Portal();
 			var portal_2:Portal = new Portal();
 			var portal_3:Portal = new Portal();
 			var portal_4:Portal = new Portal();
+			var portal_5:Portal = new Portal();
+			var portal_6:Portal = new Portal();
+			var portal_7:Portal = new Portal();
+			var portal_8:Portal = new Portal();
 			deathTrap.init();
 			
-			portal_1.spawn(1000,620);
+			portal_1.spawn(1330,720);
 			portal_2.spawn(350, 90);
 			portal_2.model.rotationX = 180;
-			portal_3.spawn(2400, 700);
-			portal_4.spawn(4300, 620);
+			portal_3.spawn(1650, 600);
+			portal_4.spawn(2350, 140);
+			portal_4.model.rotationX = 180;
+			portal_5.spawn(3050, 700);
+			portal_6.spawn(5100, 700);
+			portal_7.spawn(3300, 450);
+			portal_8.spawn(6300, 550);
+			
 			
 			//Enemies...
 			var en1:EnemyShoot = new EnemyShoot();
-			en1.spawn(1300, 700);
+			en1.spawn(3500, 650);
 			
 
 		}

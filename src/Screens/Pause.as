@@ -5,7 +5,7 @@ package Screens
 	import flash.display.MovieClip;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-
+	
 	public class Pause
 	{
 		private var _model:MovieClip;
@@ -15,16 +15,10 @@ package Screens
 			this._model = Locator.assetsManager.getMovieClip("MC_Pause");
 		}
 		
-		public function init():void
+		public function get model():MovieClip
 		{
-			Locator.game.containerLevel.addChild(this._model);
-			this._model.x = Locator.mainStage.stageWidth/2;
-			this._model.y = Locator.mainStage.stageHeight/2;
+			return this._model;
 		}
-		
-		public function exit():void
-		{
-			Locator.game.containerLevel.removeChild(this._model);
-		}
+
 	}
 }

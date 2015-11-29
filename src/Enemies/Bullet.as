@@ -21,7 +21,8 @@ package Enemies
 			this._model.name = "Bullet";
 			this._bulletSpeed = 6;
 			this._timeToDestroy = 3000;
-			this._currentTimeToDestroy = this._timeToDestroy;
+			this._currentTimeToDestroy = this._timeToDestroy;		
+
 		}
 		
 		public function get model():MovieClip
@@ -54,7 +55,7 @@ package Enemies
 		public function move():void
 		{
 			this._model.x -= bulletSpeed;
-			trace("bullet moving...");
+			//trace("bullet moving...");
 		}
 		
 		public function add(posX:Number, posY:Number):void
@@ -63,6 +64,9 @@ package Enemies
 			Locator.game.containerLevel.addChild(this._model);
 			Locator.game.updateables.push(this);
 			Locator.game.allDestroys.push(this);
+			this._model.scaleX = 0.5;
+			this._model.scaleY = 0.5;
+			
 			this._model.x = posX;
 			this._model.y = posY;
 			

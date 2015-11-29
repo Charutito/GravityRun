@@ -13,7 +13,6 @@ package General
 		public function Deathtrap() 
 		{
 			this._model = Locator.assetsManager.getMovieClip("MC_deathtrap");
-			trace(this._model);
 		}
 		
 		public function getModel():MovieClip
