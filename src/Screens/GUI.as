@@ -16,7 +16,7 @@ package Screens
 		public function init(posX:int, posY:int):void
 		{
 			this.model = Locator.assetsManager.getMovieClip("MC_DiamondHUD");
-			Locator.mainStage.addChild(this.model);
+			Locator.game.containerGUI.addChild(this.model);
 			
 			this.model.x = posX;
 			this.model.y = posY;	

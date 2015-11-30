@@ -44,12 +44,12 @@ package Engine.Camera
 			Locator.mainStage.removeChild(this._view);
 		}
 		
-		public function addToView(child:MovieClip):void
+		public function addToView(child:Sprite):void
 		{
 			this._view.addChild(child);	
 		}
 		
-		public function removeFromView(child:MovieClip):void
+		public function removeFromView(child:Sprite):void
 		{
 			this._view.removeChild(child);
 		}

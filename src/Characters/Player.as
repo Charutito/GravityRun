@@ -32,7 +32,7 @@ package Characters
 		{
 			this._speedX = 6;
 			this._speedY = 0;
-			this._jumpForce = -13;
+			this._jumpForce = -14;
 			this._canJump = true;
 			this._gravity = 1;
 			this._canChangeGravity = true;
@@ -71,7 +71,7 @@ package Characters
 		{
 			this._canJump = false;
 			this._speedY = this._jumpForce;
-			changeAnimation("jump");
+			changeAnimation("jump");	
 		}
 		
 		public function changeAnimation(name:String):void
@@ -88,7 +88,6 @@ package Characters
 				{
 					//Hardcodeo del amor ya que el movie toca constantemente la plataforma y no te deja saltar
 					this._model.y = Locator.game.level.allPlatformsDown[i].y - 65; //Locator.game.level.allPlatforms[i].height;  
-					
 					this._speedY = 0;
 					this._canJump = true;
 					this._canChangeGravity = true;
@@ -127,7 +126,7 @@ package Characters
 		
 		public function destroy():void
 		{
-			Locator.game.containerLevel.removeChild(this._model);
+			//Locator.game.containerLevel.removeChild(this._model);
 			this.totalDiamond = 0;
 			Locator.game.addResult("MC_Lose");
 			
@@ -135,57 +134,29 @@ package Characters
 		
 		public function checkCollision():void
 		{
-			/*for (var i:int = Locator.game.containerLevel.numChildren - 1; i >= 0; i--)
-			{
-			var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
 			
-			if(temp.name == ("Diamond") && this._model.hitTestObject(temp))
-			temp.destroy();
-			if(temp.name == ("Portal") && this._model.hitTestObject(temp) && this._canChangeGravity)
-			{
-			trace("Colisione con un portal...");
-			this._gravity = this._gravity * -1;
-			this._model.y = temp.y + (temp.height * this._gravity);
-			this._model.x = temp.x;
-			this._canChangeGravity = false;
-			changeAnimation("gravity");
-			this._model.scaleY *= -1;
-			this._model.scaleX *= -1;
-			this._changeDir = 0;
-			this._canJump = false;
-			}
-			if(temp is Bullet && this._model.hitTestObject(temp) )
-			{
-			temp.destroy();
-			die();
-			trace("ME PEGARON MAMA");
-			}
-			}*/
-			for each(var element in Locator.game.allDestroys)
+			for each(var element:IDestroyable in Locator.game.allDestroys)
 			{
 				if(element is Diamond && this._model.hitTestObject(element.getModel()) )
 					element.destroy();					
 				else if( element is Bullet && this._model.hitTestObject(element.getModel()) )
 				{
 					element.destroy();
-					//die();
+					destroy();
 					trace("Colision con bullet...");
-				}/*else		if( this._model.mc_hitCenter.hitTestObject(Locator.game.level.deathtrap) ){
+				}/*else if( this._model.mc_hitCenter.hitTestObject(Locator.game.level.deathTrap.getModel()) ){
 					destroy();
 					trace("TOQUE DEATHTRAPPP....!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}*/
 			}
 			
-			//ME PARECE QUE ESTA TOMANDO MAL EL HITBOX O ALGO, NO SE PORQUEE
 			// Collision con los portales
 			for (var i:int = 0; i < Locator.game.containerLevel.numChildren - 1; i++)
 			{
 				var temp:MovieClip = Locator.game.containerLevel.getChildAt(i) as MovieClip;
-				//trace("NumChildren: ", Locator.game.containerLevel.numChildren, temp);
 				if(temp != null){
 					if(temp.name == ("Portal") && this._model.hitTestObject(temp.hitbox_p) && this._canChangeGravity)
 					{
-						trace("Colisione con un portal...");
 						this._gravity = this._gravity * -1;
 						this._model.y = temp.y + (temp.height * this._gravity);
 						this._model.x = temp.x;
@@ -197,7 +168,6 @@ package Characters
 						this._changeDir = 0;
 						this._canJump = false;
 					}
-					
 				}
 			}
 		}

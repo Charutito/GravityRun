@@ -119,7 +119,9 @@ package Screens
 			var portal_6:Portal = new Portal();
 			var portal_7:Portal = new Portal();
 			var portal_8:Portal = new Portal();
-			deathTrap.init();
+			
+			//FALTA INICIAR DEATHTRAP POR QUE NO SE SI TENGO EL FLA...
+			//deathTrap.init();
 			
 			portal_1.spawn(1330,720);
 			portal_2.spawn(350, 90);

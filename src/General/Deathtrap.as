@@ -22,7 +22,8 @@ package General
 		
 		public function init():void
 		{
-			//Locator.game.containerLevel.addChild(this._model);
+			Locator.game.containerLevel.addChild(this._model);
+			Locator.game.updateables.push(this);
 			Locator.game.allDestroys.push(this);
 			trace(" Deathtrap Generada...");
 		}

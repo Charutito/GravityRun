@@ -25,6 +25,7 @@ package
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
+	import flash.events.LocationChangeEvent;
 	import flash.events.MouseEvent;
 	import flash.net.dns.AAAARecord;
 	import flash.ui.Keyboard;
@@ -43,8 +44,10 @@ package
 		
 		public var updateables:Array;
 		//Containers...
-		public var containerLevel:MovieClip;
-		public var containerGUI:GUI;
+		public var containerLevel:Sprite;
+		public var containerGUI:Sprite;
+		//Gui...
+		public var gui:GUI = new GUI();
 		
 		public var pauseGui:Pause;
 		private var _isPaused:Boolean = false;
@@ -58,11 +61,11 @@ package
 		{
 			this._menu = new Menu();
 			this._camera = new Camera();
-			this.containerLevel = new MovieClip();
+			this.containerLevel = new Sprite();
 			this._level = new Level();
 			this._char = new Player();
 			this._collectables = new Collectables();
-			this.containerGUI = new GUI();
+			this.containerGUI = new Sprite();
 			this.updateables = new Array();
 			this._res  = new WinAndLose();
 		}
@@ -123,8 +126,9 @@ package
 			
 			Locator.mainStage.addChild(this.containerLevel);
 			this._camera.addToView(this.containerLevel);
+
 			this._camera.on();
-			
+			Locator.mainStage.addChild(containerGUI);
 			//Parte 1 del Nivel
 			this._level.initCapa3();			
 			this._level.init();	
@@ -152,8 +156,8 @@ package
 			Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, pause);
 			
-			containerGUI.init(900,40);
-			containerGUI.model.counter.text = "0";
+			gui.init(900,40);
+			gui.model.counter.text = "0";
 		}
 		
 		public function addResult(name:String):void
@@ -164,33 +168,35 @@ package
 		
 		
 		public function restartGame(e:MouseEvent):void
-		{
-			//Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
-			//this.containerLevel.removeChildren();
-			//Locator.mainStage.removeChildren();
+		{			
+			if(this._isPaused)
+			{
+				this.pauseGui.model.btn_reset.removeEventListener(MouseEvent.CLICK, restartGame);
+				Locator.mainStage.focus = this.containerLevel;
+				Locator.mainStage.focus = null;
+				this._isPaused = false;
+				Locator.mainStage.removeChild(pauseGui.model);
+			}
 			for each(var elem in this.allDestroys)
 			{
 				elem.destroy();
 			}
+			
 			this.allDestroys = new Vector.<IDestroyable>();
 			Bullet._allBullets = new Vector.<Bullet>();
 			this.updateables = new Array();
 			Locator.game._level.allLevelLayers = new Vector.<Sprite>;
-			Locator.game.containerLevel = null;
+			this.containerLevel.removeChildren();
+			this.containerGUI.removeChildren();
 			
-			this._menu = new Menu();
 			this._camera = new Camera();
-			this.containerLevel = new MovieClip();
+			this.containerLevel = new Sprite();
 			this._level = new Level();
 			this._char = new Player();
 			this._collectables = new Collectables();
-			this.containerGUI = new GUI();
+			this.containerGUI = new Sprite();
 			
-			if(this._res != null)	
-				this._res.remove();
-			
-			trace("REINICIE JUEGO...");
-			loadMenu(e);
+
 		}
 		
 		public function endGame(e:MouseEvent):void
@@ -200,7 +206,7 @@ package
 		
 		public function pause(event:KeyboardEvent):void
 		{
-			trace("Pause...");			
+			trace("Pause...");
 			if(event.keyCode == Keyboard.ENTER && !this._isPaused)
 			{
 				Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
@@ -210,7 +216,7 @@ package
 				pauseGui.model.x = Locator.mainStage.stageWidth/2;
 				pauseGui.model.y = Locator.mainStage.stageHeight/2;
 				this.pauseGui.model.btn_reanudar.addEventListener(MouseEvent.CLICK, removePause);
-				this.pauseGui.model.btn_reset.addEventListener(MouseEvent.CLICK, restartGamePause);
+				this.pauseGui.model.btn_reset.addEventListener(MouseEvent.CLICK, restartGame);
 				this.pauseGui.model.btn_reset.addEventListener(MouseEvent.CLICK, startGame);
 				this.pauseGui.model.btn_menu.addEventListener(MouseEvent.CLICK, menu);
 				this.pauseGui.model.btn_menu.addEventListener(MouseEvent.CLICK, restartGame);
@@ -232,9 +238,10 @@ package
 			this._isPaused = false;
 			Locator.mainStage.removeChild(pauseGui.model);
 			this._menu = new Menu();
+			this._menu.addMenu();
 		}
 		
-		public function restartGamePause(e:MouseEvent):void
+		/*public function restartGamePause(e:MouseEvent):void
 		{
 			this.pauseGui.model.btn_reset.removeEventListener(MouseEvent.CLICK, restartGamePause);
 			
@@ -247,6 +254,7 @@ package
 			{
 				elem.destroy();
 			}
+			
 			this.allDestroys = new Vector.<IDestroyable>();
 			Bullet._allBullets = new Vector.<Bullet>();
 			this.updateables = new Array();
@@ -263,7 +271,7 @@ package
 			if(this._res != null)	
 				this._res.remove();
 
-		}
+		}*/
 		
 		public function removePause(e:MouseEvent):void
 		{
@@ -285,7 +293,7 @@ package
 			//this._char.update();
 			this._camera.lookAt(this._char.model.mc_hitCenter);
 			this._controller.update();
-			this.containerGUI.model.counter.text = this._char.totalDiamond;	
+			this.gui.model.counter.text = this._char.totalDiamond;	
 		}		
 	}
 }
