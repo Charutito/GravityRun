@@ -1,4 +1,4 @@
-package myEngine
+package Engine
 {
 	import flash.media.Sound;
 	import flash.media.SoundChannel;

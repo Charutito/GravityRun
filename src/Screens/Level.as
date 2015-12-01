@@ -5,7 +5,6 @@ package Screens
 	import Engine.Locator;
 	
 	import General.Collectables;
-	import General.Deathtrap;
 	import General.Diamond;
 	import General.Portal;
 	
@@ -23,8 +22,6 @@ package Screens
 		
 		private var _model2:MovieClip;
 		private var _capa3_2:MovieClip;
-		//DeathTrap	
-		public var deathTrap:Deathtrap = new Deathtrap();
 				
 		public var allLevelLayers:Vector.<Sprite> = new Vector.<Sprite>();		
 		
@@ -119,9 +116,6 @@ package Screens
 			var portal_6:Portal = new Portal();
 			var portal_7:Portal = new Portal();
 			var portal_8:Portal = new Portal();
-			
-			//FALTA INICIAR DEATHTRAP POR QUE NO SE SI TENGO EL FLA...
-			//deathTrap.init();
 			
 			portal_1.spawn(1330,720);
 			portal_2.spawn(350, 90);

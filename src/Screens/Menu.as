@@ -1,9 +1,11 @@
 package Screens
 {
 	import Engine.Locator;
+	import Engine.SoundController;
 	
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
+	import flash.sampler.stopSampling;
 	import flash.ui.MouseCursorData;
 
 	public class Menu
@@ -11,12 +13,14 @@ package Screens
 		private var _menuModel:MovieClip;
 		private var _htpModel:MovieClip;
 		private var _creditsModel:MovieClip;
+		private var _menuMusic:SoundController;
+		private var _buttonSound:SoundController;
+		
+		private var _isPlayingMusic:Boolean = false;
 		
 		public function Menu()
 		{
 			
-			
-
 		}
 		
 		public function get menuModel():MovieClip
@@ -27,21 +31,35 @@ package Screens
 		public function addMenu():void
 		{	
 			trace("Agregando menu...");
-			//Agrego y posiciono el movie.
+			this._menuMusic = new SoundController( Locator.assetsManager.getSound("sndMenu") );
+			this._buttonSound = new SoundController( Locator.assetsManager.getSound("button") );
+			//Agrego y posiciono el movie...
 			this._menuModel = Locator.assetsManager.getMovieClip("MC_Menu");
 			Locator.mainStage.addChild(this._menuModel);
 			this._menuModel.x = 112;
-			//this._menuModel.y = Locator.mainStage.stageHeight/2;
+			//Le doy play a la musica...
+			if(!this._isPlayingMusic){
+				this._menuMusic.play(1, 0);
+				this._isPlayingMusic = true;
+			}
+
 			//Agrego los listeners de los botones...
-			this._menuModel.btn_startGame.addEventListener(MouseEvent.CLICK, Locator.game.startGame);
+			this._menuModel.btn_startGame.addEventListener(MouseEvent.CLICK, initGame);
 			this._menuModel.btn_HTP.addEventListener(MouseEvent.CLICK, addHowToPlay);
 			this._menuModel.btn_credits.addEventListener(MouseEvent.CLICK, addCredits);
+		}
+		
+		public function initGame(e:MouseEvent):void
+		{	
+			this._menuMusic.stop();
+			this._isPlayingMusic = false;
+			Locator.game.startGame();
 		}
 		
 		public function removeMenu():void
 		{
 			//Saco los listeners y remuevo el menu...
-			this._menuModel.btn_startGame.removeEventListener(MouseEvent.CLICK, Locator.game.startGame);
+			this._menuModel.btn_startGame.removeEventListener(MouseEvent.CLICK, initGame);
 			this._menuModel.btn_HTP.removeEventListener(MouseEvent.CLICK, addHowToPlay);
 			this._menuModel.btn_credits.removeEventListener(MouseEvent.CLICK, addCredits);
 			Locator.mainStage.removeChild(this._menuModel);
@@ -50,6 +68,8 @@ package Screens
 		
 		public function addHowToPlay(e:MouseEvent):void
 		{
+			//Sonido del boton
+			this._buttonSound.play(1,0);
 			//Saco el menu.
 			removeMenu();
 			//Cargo el que necesito con su listener...
@@ -65,12 +85,13 @@ package Screens
 		{
 			this._htpModel.btn_back.removeEventListener(MouseEvent.CLICK, removeHTP);
 			Locator.mainStage.removeChild(this._htpModel);
+			this._buttonSound.play(1,0);
 			addMenu();
 		}
 		
 		public function addCredits(e:MouseEvent):void
 		{
-			trace("poniendo los credits");
+			this._buttonSound.play(1,0);
 			//Saco el menu...
 			removeMenu();
 			//Cargo los credits...
@@ -86,6 +107,7 @@ package Screens
 			trace("sacando los credits");
 			this._creditsModel.btn_back.removeEventListener(MouseEvent.CLICK, removeCredits);
 			Locator.mainStage.removeChild(this._creditsModel);
+			this._buttonSound.play(1,0);
 			addMenu();
 		}
 

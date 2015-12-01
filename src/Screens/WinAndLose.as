@@ -27,8 +27,13 @@ package Screens
 			this._model.x = Locator.mainStage.stageWidth/2;
 			this._model.y = Locator.mainStage.stageHeight/2;
 			this._model.btn_restart.addEventListener(MouseEvent.CLICK, Locator.game.restartGame);
-			this._model.btn_restart.addEventListener(MouseEvent.CLICK, Locator.game.startGame);
+			this._model.btn_restart.addEventListener(MouseEvent.CLICK, initGame);
 			this._model.btn_exit.addEventListener(MouseEvent.CLICK, Locator.game.endGame);
+		}
+		
+		public function initGame(e:MouseEvent):void
+		{
+			Locator.game.startGame();
 		}
 		
 		public function remove():void

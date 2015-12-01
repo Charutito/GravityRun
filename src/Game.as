@@ -113,15 +113,17 @@ package
 			this._menu.addMenu();
 		}
 		
-		public function startGame(event:Event):void
+		public function startGame():void
 		{
 			//remuevo el menu
 			//if(Locator.mainStage.contains(this._menu.menuModel))
-			
+
 			if(this._menu != null)
 			{
 				this._menu.removeMenu();
 			}
+			
+			
 			this._menu = null;
 			
 			Locator.mainStage.addChild(this.containerLevel);

@@ -64,7 +64,21 @@ package Characters
 			
 			checkCollision();
 			checkPlatforms();
+			checkPositionToDie();
 			move(this._changeDir);
+			trace("Stage Height = ", Locator.mainStage.stageHeight);
+			trace("Model Y = ", this._model.y);
+			trace("Es mayor?, ", this._model.y > Locator.mainStage.stageHeight);
+			trace("Es menor?, ", this._model.y < 0);
+		}
+		
+		public function checkPositionToDie():void
+		{
+			if(this._model.y > Locator.mainStage.stageHeight + this._model.height || this._model.y < 0 - this._model.height)
+			{
+				trace("Me fui del mapa!...");
+				destroy();
+			}
 		}
 		
 		public function jump():void 
@@ -128,8 +142,7 @@ package Characters
 		{
 			//Locator.game.containerLevel.removeChild(this._model);
 			this.totalDiamond = 0;
-			Locator.game.addResult("MC_Lose");
-			
+			Locator.game.addResult("MC_Lose");	
 		}
 		
 		public function checkCollision():void
@@ -144,10 +157,7 @@ package Characters
 					element.destroy();
 					destroy();
 					trace("Colision con bullet...");
-				}/*else if( this._model.mc_hitCenter.hitTestObject(Locator.game.level.deathTrap.getModel()) ){
-					destroy();
-					trace("TOQUE DEATHTRAPPP....!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				}*/
+				}
 			}
 			
 			// Collision con los portales
