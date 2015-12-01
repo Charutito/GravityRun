@@ -3,6 +3,7 @@ package Screens
 	import Enemies.EnemyShoot;
 	
 	import Engine.Locator;
+	import Engine.SoundController;
 	
 	import General.Collectables;
 	import General.Diamond;
@@ -27,11 +28,13 @@ package Screens
 		
 		public var allPlatformsDown:Vector.<MovieClip> = new Vector.<MovieClip>();
 		public var allPlatformsUp:Vector.<MovieClip> = new Vector.<MovieClip>();
+		
+		private var _level01Music:SoundController;
 
 
 		public function Level()
 		{
-
+			this._level01Music = new SoundController( Locator.assetsManager.getSound( "sndLevel1" ) );
 		}
 		
 		//GETTERS....
@@ -145,6 +148,7 @@ package Screens
 			this._capa3 = Locator.assetsManager.getMovieClip("MC_Level01_capa3");
 			Locator.game.containerLevel.addChild(this._capa3);
 			this.allLevelLayers.push(this._capa3);
+
 		}
 		
 		public function init():void
@@ -159,6 +163,7 @@ package Screens
 			this._capa1 = Locator.assetsManager.getMovieClip("MC_Level01_capa1");
 			Locator.game.containerLevel.addChild(this._capa1);
 			this.allLevelLayers.push(this._capa1);
+
 		}
 		
 		public function initCapaInicio():void

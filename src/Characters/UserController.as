@@ -27,7 +27,7 @@ package Characters
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, evKeyUp);
 		}
 		
-		public function update():void
+		public function update():void 
 		{
 			checkKeys();
 		}
