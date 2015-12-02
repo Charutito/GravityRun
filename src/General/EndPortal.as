@@ -16,12 +16,14 @@ package General
 		{
 			this._model = Locator.assetsManager.getMovieClip("MC_Portal_Final");
 			this._model.name = "End_Portal";
+			this._model.gotoAndPlay("idle");
 			_model.addEventListener("unlock", evUnlock);
 		}
 		
 		protected function evUnlock(event:Event):void
 		{
 			trace("GANASTE VIEJA"); 
+			Locator.game.addResult("MC_Win");
 		}
 		
 		

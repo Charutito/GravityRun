@@ -250,6 +250,18 @@ package
 			this._menu.addMenu();
 		}
 		
+		public function menuWin(e:MouseEvent):void
+		{
+			
+			//this._model.btn_menu.addEventListener(MouseEvent.CLICK, Locator.game.menuWin);
+			Locator.mainStage.focus = this.containerLevel;
+			Locator.mainStage.focus = null;
+			//Locator.mainStage.removeChild(pauseGui.model);
+			this._menu = new Menu();
+			this._menu.addMenu();
+			
+		}
+		
 		/*public function restartGamePause(e:MouseEvent):void
 		{
 			this.pauseGui.model.btn_reset.removeEventListener(MouseEvent.CLICK, restartGamePause);

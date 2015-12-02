@@ -105,6 +105,19 @@ package Screens
 			var diamond_18:Diamond = new Diamond();
 			var diamond_19:Diamond = new Diamond();
 			
+			var diamond_20:Diamond = new Diamond();
+			var diamond_21:Diamond = new Diamond();
+			var diamond_22:Diamond = new Diamond();
+			var diamond_23:Diamond = new Diamond();
+			var diamond_24:Diamond = new Diamond();
+			var diamond_25:Diamond = new Diamond();
+			var diamond_26:Diamond = new Diamond();
+			var diamond_27:Diamond = new Diamond();
+			var diamond_28:Diamond = new Diamond();
+			var diamond_29:Diamond = new Diamond();
+			var diamond_30:Diamond = new Diamond();
+			var diamond_31:Diamond = new Diamond();
+			
 			
 			diamond_1.spawn(550,400);
 			diamond_2.spawn(1050,450);
@@ -125,6 +138,32 @@ package Screens
 			diamond_17.spawn(4370,550);
 			diamond_18.spawn(4500,550);
 			diamond_19.spawn(4600,550);
+			
+			diamond_20.spawn(4500,160);
+			diamond_20.model.rotationX = 180;
+			diamond_21.spawn(4600,160);
+			diamond_21.model.rotationX = 180;
+			diamond_22.spawn(4700,160);
+			diamond_22.model.rotationX = 180;
+			diamond_23.spawn(4800,160);
+			diamond_23.model.rotationX = 180;
+			diamond_24.spawn(4900,160);
+			diamond_24.model.rotationX = 180;
+			diamond_25.spawn(5000,160);
+			diamond_25.model.rotationX = 180;
+			diamond_26.spawn(6150,100);
+			diamond_26.model.rotationX = 180;
+			diamond_27.spawn(6430,200);
+			diamond_27.model.rotationX = 180;
+			diamond_28.spawn(900,160);
+			diamond_28.model.rotationX = 180;
+			diamond_29.spawn(1000,160);
+			diamond_29.model.rotationX = 180;
+			diamond_30.spawn(1100,160);
+			diamond_30.model.rotationX = 180;
+			diamond_31.spawn(1200,160);
+			diamond_31.model.rotationX = 180;
+			
 			
 			
 			//Portales..
@@ -158,7 +197,7 @@ package Screens
 			
 			en1.spawn(3700, 680);			
 			en2.spawn(1000, 600);
-			en3.spawn(7500, 620);
+			en3.spawn(7510, 620);
 			
 			
 			//End Portal

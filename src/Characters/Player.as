@@ -92,6 +92,7 @@ package Characters
 					this._model.alpha = 0;
 					this._speedX = 0;
 					_isInGame = false;
+					ex.addEventListener("unlock", evUnlockDestroy);
 				}else if(this._model.y < 0 - this._model.height && _isInGame)
 				{
 					ex.x = this._model.x;
@@ -100,10 +101,8 @@ package Characters
 					this._model.alpha = 0;
 					this._speedX = 0;
 					_isInGame = false;
+					ex.addEventListener("unlock", evUnlockDestroy);
 				}
-				
-				ex.addEventListener("unlock", evUnlockDestroy);
-				
 			}
 		}
 		
