@@ -53,7 +53,8 @@ package Characters
 			this._model = Locator.assetsManager.getMovieClip("MC_hero");
 			Locator.game.containerLevel.addChild(this._model);	
 			Locator.game.allDestroys.push(this);
-			Locator.game.updateables.push(this);
+			//Locator.game.updateables.push(this);
+			Locator.updateManager.addCallback(update);
 			this._model.x = 70;
 			this._model.y = 500;	
 			
@@ -62,7 +63,7 @@ package Characters
 			_isInGame = true;
 		}
 		
-		public function update():void
+		public function update(event:Event):void
 		{		
 			this._model.y += this._speedY * this._gravity;
 			this._speedY += 0.7;	
@@ -71,10 +72,6 @@ package Characters
 			checkPlatforms();
 			checkPositionToDie();
 			move(this._changeDir);
-			trace("Stage Height = ", Locator.mainStage.stageHeight);
-			trace("Model Y = ", this._model.y);
-			trace("Es mayor?, ", this._model.y > Locator.mainStage.stageHeight);
-			trace("Es menor?, ", this._model.y < 0);
 		}
 		
 		public function checkPositionToDie():void
@@ -223,7 +220,6 @@ package Characters
 						this._model.alpha = 0;
 					}else if(temp.name == ("EnemyShoot") && this._model.hitTestObject(temp.hitbox) && _isInGame)
 					{
-						
 						var ex:MovieClip = new MovieClip();
 						ex = Locator.assetsManager.getMovieClip("MC_Explotion");
 						ex.addEventListener("unlock", evUnlockDestroy);

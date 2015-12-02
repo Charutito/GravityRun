@@ -29,6 +29,8 @@ package Enemies
 			model.addEventListener("unlock", evUnlock);
 			_isAttacking = false;
 			
+			Locator.updateManager.addCallback(update);
+			
 		}
 		
 		protected function evUnlock(event:Event):void
@@ -36,7 +38,7 @@ package Enemies
 			_isAttacking = false;			
 		}
 		
-		public function update():void
+		public function update(event:Event):void
 		{
 			this._currentTimeToShoot -= 1000 / Locator.mainStage.frameRate;
 			//trace("current time: " + this._currentTimeToShoot);

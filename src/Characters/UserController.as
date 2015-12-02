@@ -2,17 +2,15 @@ package Characters
 {
 	import Engine.Locator;
 	
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 
 	public class UserController
 	{
 		private var _objectControlled:Player;
 		
-		public var KeyCodeUp:int;
+		//public var KeyCodeUp:int;
 		public var keyGravity:int;
-		
-		private var _goUp:Boolean;
-		
 		
 		/** Configura los controles de movimiento.
 		 * 
@@ -21,43 +19,23 @@ package Characters
 		public function UserController(p:Player, KeyCodeUp:int)
 		{
 			this._objectControlled = p;
-			this.KeyCodeUp = KeyCodeUp;
-			//Locator.game.updateables.push(this);
-			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, evKeyDown);
-			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, evKeyUp);
+			//this.KeyCodeUp = KeyCodeUp;
+			Locator.inputManager.setRelation("Jump", KeyCodeUp);
+			//agregar el callback al UM...
+			Locator.updateManager.addCallback(update);
 		}
 		
-		public function update():void 
+		public function update(event:Event):void 
 		{
 			checkKeys();
 		}
 		
 		public function checkKeys():void
 		{
-			if(this._goUp && this._objectControlled._canJump)
+			if( Locator.inputManager.getKeyPressingByName("Jump") && this._objectControlled._canJump)
 			{
 				this._objectControlled._canJump = false;
 				this._objectControlled.jump();
-			}
-		}
-		
-		protected function evKeyUp(event:KeyboardEvent):void
-		{
-			switch(event.keyCode)
-			{
-				case KeyCodeUp:
-					this._goUp = false;
-					break;
-			}
-		}
-		
-		protected function evKeyDown(event:KeyboardEvent):void
-		{
-			switch(event.keyCode)
-			{
-				case KeyCodeUp:
-					this._goUp = true;
-					break;
 			}
 		}
 	}

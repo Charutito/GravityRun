@@ -18,7 +18,7 @@ package Enemies
 		public function spawn(posX:Number, posY:Number):void
 		{
 			Locator.game.containerLevel.addChild(this.model);
-			Locator.game.updateables.push(this);
+			//Locator.game.updateables.push(this);
 			Locator.game.allDestroys.push(this);
 			this.model.x = posX;
 			this.model.y = posY;

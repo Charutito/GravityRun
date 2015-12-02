@@ -5,6 +5,7 @@ package Enemies
 	import Interfaces.IDestroyable;
 	
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.net.dns.AAAARecord;
 	
 	public class Bullet implements IDestroyable
@@ -40,7 +41,7 @@ package Enemies
 			return this._bulletSpeed;
 		}
 		
-		public function update():void
+		public function update(event:Event):void
 		{
 			move();
 			this._currentTimeToDestroy -= 1000 / Locator.mainStage.frameRate;
@@ -62,7 +63,8 @@ package Enemies
 		{	
 			this._model = Locator.assetsManager.getMovieClip("MC_Bullet");
 			Locator.game.containerLevel.addChild(this._model);
-			Locator.game.updateables.push(this);
+			//Locator.game.updateables.push(this);
+			Locator.updateManager.addCallback(update);
 			Locator.game.allDestroys.push(this);
 			this._model.scaleX = 0.5;
 			this._model.scaleY = 0.5;
@@ -77,8 +79,9 @@ package Enemies
 			trace("holi");
 			Locator.game.containerLevel.removeChild(this._model);
 			
-			var index:int = Locator.game.updateables.indexOf(this)
-			Locator.game.updateables.splice(index, 1);
+			/*var index:int = Locator.game.updateables.indexOf(this)
+			Locator.game.updateables.splice(index, 1);*/
+			Locator.updateManager.removeCallback(update);
 			
 			var indexBullet:int = _allBullets.indexOf(this);
 			_allBullets.splice(indexBullet, 1);
@@ -88,7 +91,7 @@ package Enemies
 			
 			//Seteo el valor del timer en 0 para que vuelva.
 			this._currentTimeToDestroy = this._timeToDestroy;
-			trace(index, indexBullet, indexDestroy);
+			//trace(index, indexBullet, indexDestroy);
 		}
 	}
 }
