@@ -76,8 +76,8 @@ package Enemies
 		
 		public function destroy():void
 		{
-			
-			//Locator.game.containerLevel.removeChild(this._model);
+			if(Locator.game.containerLevel.contains(this._model))
+				Locator.game.containerLevel.removeChild(this._model);
 			
 			/*var index:int = Locator.game.updateables.indexOf(this)
 			Locator.game.updateables.splice(index, 1);*/
