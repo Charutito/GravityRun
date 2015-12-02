@@ -20,6 +20,8 @@ package Enemies
 			this.model.scaleX = 0.5;
 			this.model.scaleY = 0.5;
 			
+			this.model.name = "EnemyShoot";
+			
 			//Timers...
 			this._timeToShoot = 3000;
 			this._currentTimeToShoot = this._timeToShoot;

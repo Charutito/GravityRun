@@ -222,6 +222,18 @@ package Characters
 						this._speedX = 0;
 						_isInGame = false;
 						this._model.alpha = 0;
+					}else if(temp.name == ("EnemyShoot") && this._model.hitTestObject(temp.hitbox) && _isInGame)
+					{
+						
+						var ex:MovieClip = new MovieClip();
+						ex = Locator.assetsManager.getMovieClip("MC_Explotion");
+						ex.addEventListener("unlock", evUnlockDestroy);
+						ex.x = this._model.x;
+						ex.y = this._model.y;
+						Locator.game.containerLevel.addChild(ex);
+						this._model.alpha = 0;
+						this._speedX = 0;
+						_isInGame = false;
 					}
 				}
 			}

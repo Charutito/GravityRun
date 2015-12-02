@@ -97,7 +97,13 @@ package Screens
 			var diamond_10:Diamond = new Diamond();
 			var diamond_11:Diamond = new Diamond();
 			var diamond_12:Diamond = new Diamond();
-			
+			var diamond_13:Diamond = new Diamond();
+			var diamond_14:Diamond = new Diamond();
+			var diamond_15:Diamond = new Diamond();
+			var diamond_16:Diamond = new Diamond();
+			var diamond_17:Diamond = new Diamond();
+			var diamond_18:Diamond = new Diamond();
+			var diamond_19:Diamond = new Diamond();
 			
 			
 			diamond_1.spawn(550,400);
@@ -111,7 +117,15 @@ package Screens
 			diamond_9.spawn(4000,450);
 			diamond_10.spawn(4100,400);
 			diamond_11.spawn(4200,400);
-			diamond_12.spawn(4300,450);
+			diamond_12.spawn(4300,430);
+			diamond_13.spawn(2150,650);
+			diamond_14.spawn(2250,650);
+			diamond_15.spawn(2350,650);
+			diamond_16.spawn(2450,650);
+			diamond_17.spawn(4370,550);
+			diamond_18.spawn(4500,550);
+			diamond_19.spawn(4600,550);
+			
 			
 			//Portales..
 			var portal_1:Portal = new Portal();
@@ -144,6 +158,7 @@ package Screens
 			
 			en1.spawn(3700, 680);			
 			en2.spawn(1000, 600);
+			en3.spawn(7500, 620);
 			
 			
 			//End Portal
