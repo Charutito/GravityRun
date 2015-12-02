@@ -76,12 +76,14 @@ package Enemies
 		
 		public function destroy():void
 		{
-			trace("holi");
-			Locator.game.containerLevel.removeChild(this._model);
+			
+			//Locator.game.containerLevel.removeChild(this._model);
 			
 			/*var index:int = Locator.game.updateables.indexOf(this)
 			Locator.game.updateables.splice(index, 1);*/
-			Locator.updateManager.removeCallback(update);
+			var index:int = Locator.updateManager.allCallbacks.indexOf(this);
+			Locator.updateManager.allCallbacks.splice(index, 1);
+			//Locator.updateManager.removeCallback(update);
 			
 			var indexBullet:int = _allBullets.indexOf(this);
 			_allBullets.splice(indexBullet, 1);

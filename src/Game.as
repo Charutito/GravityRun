@@ -190,7 +190,8 @@ package
 			this.allDestroys = new Vector.<IDestroyable>();
 			Bullet._allBullets = new Vector.<Bullet>();
 			//this.updateables = new Array();
-			Locator.game._level.allLevelLayers = new Vector.<Sprite>;
+			Locator.updateManager.allCallbacks = new Vector.<Function>();
+			Locator.game._level.allLevelLayers = new Vector.<Sprite>();
 			this.containerLevel.removeChildren();
 			this.containerGUI.removeChildren();
 			
@@ -211,7 +212,7 @@ package
 		
 		public function pause():void
 		{
-			trace("Pause...");
+			//trace("Pause...");
 			if( Locator.inputManager.getKeyPressingByName("Pause") && !this._isPaused)
 			{
 				//Locator.mainStage.removeEventListener(Event.ENTER_FRAME, evUpdate);
