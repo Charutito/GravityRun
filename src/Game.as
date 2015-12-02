@@ -68,6 +68,7 @@ package
 			this.containerGUI = new Sprite();
 			this.updateables = new Array();
 			this._res  = new WinAndLose();
+			
 		}
 		
 		//Getters...
@@ -151,6 +152,7 @@ package
 			//Capas exteriores
 			this._level.initCapa1();
 			this._level.initCapaInicio();
+			this._level.initCapaFin();
 			
 			
 			this._controller = new UserController(this._char, Keyboard.SPACE);
@@ -219,7 +221,7 @@ package
 				pauseGui.model.y = Locator.mainStage.stageHeight/2;
 				this.pauseGui.model.btn_reanudar.addEventListener(MouseEvent.CLICK, removePause);
 				this.pauseGui.model.btn_reset.addEventListener(MouseEvent.CLICK, restartGame);
-				this.pauseGui.model.btn_reset.addEventListener(MouseEvent.CLICK, startGame);
+				this.pauseGui.model.btn_reset.addEventListener(MouseEvent.CLICK, initGame);
 				this.pauseGui.model.btn_menu.addEventListener(MouseEvent.CLICK, menu);
 				this.pauseGui.model.btn_menu.addEventListener(MouseEvent.CLICK, restartGame);
 
@@ -229,6 +231,11 @@ package
 				this._isPaused = false;
 				Locator.mainStage.removeChild(pauseGui.model);
 			}			
+		}
+		
+		public function initGame(e:MouseEvent):void
+		{
+			Locator.game.startGame();
 		}
 		
 		public function menu(e:MouseEvent):void

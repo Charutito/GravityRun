@@ -5,6 +5,7 @@ package Characters
 	import Engine.Locator;
 	
 	import General.Diamond;
+	import General.EndPortal;
 	import General.Portal;
 	
 	import Interfaces.IDestroyable;
@@ -23,9 +24,12 @@ package Characters
 		private var _gravity:int;
 		private var _canChangeGravity:Boolean;
 		
+		private var _isInGame:Boolean = true;;
+		
 		public var totalDiamond:int;
 		
 		private var _changeDir:Number;	
+		
 		
 		
 		public function Player()
@@ -55,6 +59,7 @@ package Characters
 			
 			this._model.mc_hitDown.alpha = 0;
 			this._model.mc_hitCenter.alpha = 0;	
+			_isInGame = true;
 		}
 		
 		public function update():void
@@ -77,8 +82,34 @@ package Characters
 			if(this._model.y > Locator.mainStage.stageHeight + this._model.height || this._model.y < 0 - this._model.height)
 			{
 				trace("Me fui del mapa!...");
-				destroy();
+				var ex:MovieClip = new MovieClip();
+				ex = Locator.assetsManager.getMovieClip("MC_Explotion");
+				if(this._model.y > Locator.mainStage.stageHeight + this._model.height && _isInGame)
+				{
+					ex.x = this._model.x;
+					ex.y = Locator.mainStage.stageHeight;
+					Locator.game.containerLevel.addChild(ex);
+					this._model.alpha = 0;
+					this._speedX = 0;
+					_isInGame = false;
+				}else if(this._model.y < 0 - this._model.height && _isInGame)
+				{
+					ex.x = this._model.x;
+					ex.y = 0;
+					Locator.game.containerLevel.addChild(ex);
+					this._model.alpha = 0;
+					this._speedX = 0;
+					_isInGame = false;
+				}
+				
+				ex.addEventListener("unlock", evUnlockDestroy);
+				
 			}
+		}
+		
+		protected function evUnlockDestroy(event:Event):void
+		{
+			destroy();				
 		}
 		
 		public function jump():void 
@@ -142,7 +173,7 @@ package Characters
 		{
 			//Locator.game.containerLevel.removeChild(this._model);
 			this.totalDiamond = 0;
-			Locator.game.addResult("MC_Lose");	
+			Locator.game.addResult("MC_Lose");
 		}
 		
 		public function checkCollision():void
@@ -155,7 +186,15 @@ package Characters
 				else if( element is Bullet && this._model.hitTestObject(element.getModel()) )
 				{
 					element.destroy();
-					destroy();
+					var ex:MovieClip = new MovieClip();
+					ex = Locator.assetsManager.getMovieClip("MC_Explotion");
+					ex.addEventListener("unlock", evUnlockDestroy);
+					//destroy();
+					ex.x = this._model.x;
+					ex.y = this._model.y;
+					Locator.game.containerLevel.addChild(ex);
+					this._model.alpha = 0;
+					this._speedX = 0;
 					trace("Colision con bullet...");
 				}
 			}
@@ -177,6 +216,12 @@ package Characters
 						this._model.scaleX *= -1;
 						this._changeDir = 0;
 						this._canJump = false;
+					}else if(temp.name == ("End_Portal") && this._model.hitTestObject(temp.hitbox) && _isInGame)
+					{
+						temp.gotoAndPlay("end");						
+						this._speedX = 0;
+						_isInGame = false;
+						this._model.alpha = 0;
 					}
 				}
 			}

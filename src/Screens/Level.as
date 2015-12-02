@@ -7,6 +7,7 @@ package Screens
 	
 	import General.Collectables;
 	import General.Diamond;
+	import General.EndPortal;
 	import General.Portal;
 	
 	import Interfaces.IDestroyable;
@@ -19,7 +20,9 @@ package Screens
 		private var _model:MovieClip;
 		private var _capa1:MovieClip;
 		private var _capa3:MovieClip;
+		
 		private var _capaInicio:MovieClip;
+		private var _capaFin:MovieClip;
 		
 		private var _model2:MovieClip;
 		private var _capa3_2:MovieClip;
@@ -119,6 +122,7 @@ package Screens
 			var portal_6:Portal = new Portal();
 			var portal_7:Portal = new Portal();
 			var portal_8:Portal = new Portal();
+			var portal_9:Portal = new Portal();
 			
 			portal_1.spawn(1330,720);
 			portal_2.spawn(350, 90);
@@ -130,12 +134,21 @@ package Screens
 			portal_6.spawn(5100, 700);
 			portal_7.spawn(3300, 450);
 			portal_8.spawn(6300, 550);
+			portal_9.spawn(7850, 550);
 			
 			
 			//Enemies...
 			var en1:EnemyShoot = new EnemyShoot();
-			en1.spawn(3500, 650);
+			var en2:EnemyShoot = new EnemyShoot();
+			var en3:EnemyShoot = new EnemyShoot();
 			
+			en1.spawn(3700, 680);			
+			en2.spawn(1000, 600);
+			
+			
+			//End Portal
+			var endPortal:EndPortal = new EndPortal();
+			endPortal.spawn(8040,670);		
 
 		}
 		
@@ -190,10 +203,19 @@ package Screens
 		public function init2():void
 		{
 			this._model2 = Locator.assetsManager.getMovieClip("MC_Level01_2_model");
-			Locator.game.containerLevel.addChild(this._model2);	
+			Locator.game.containerLevel.addChild(this._model2);
 			this.allLevelLayers.push(this._model2);
 			this._model2.x = this._model.width;
 			this._model2.y = 0;
+		}
+		
+		public function initCapaFin():void
+		{
+			this._capaFin = Locator.assetsManager.getMovieClip("MC_CapaFin");
+			Locator.game.containerLevel.addChild(this._capaFin);	
+			this.allLevelLayers.push(this._capaFin);
+			this._capaFin.x = this._model.width + this._model2.width - 150;
+			this._capaFin.y = 0;
 		}
 		
 		public function getModel():MovieClip
