@@ -11,7 +11,7 @@ package Engine
 			Locator.mainStage.addEventListener(Event.ENTER_FRAME, evUpdate);
 		}
 		
-		protected function evUpdate(event:Event):void
+		public function evUpdate(event:Event):void
 		{
 			for	(var i:int = 0; i < this.allCallbacks.length; i++)
 			{

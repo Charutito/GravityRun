@@ -1,3 +1,4 @@
+
 package
 {
 	import Characters.Player;
@@ -14,7 +15,6 @@ package
 	
 	import Screens.GUI;
 	import Screens.Level;
-	import Screens.Menu;
 	import Screens.Pause;
 	import Screens.WinAndLose;
 	
@@ -35,8 +35,6 @@ package
 		private var _char:Player;
 		private var _controller:UserController;
 		private var _camera:Camera;
-		
-		private var _menu:Menu;
 		
 		private var _level:Level;
 		private var _res:WinAndLose;
@@ -59,7 +57,6 @@ package
 		
 		public function Game()
 		{
-			this._menu = new Menu();
 			this._camera = new Camera();
 			this.containerLevel = new Sprite();
 			this._level = new Level();
@@ -86,44 +83,23 @@ package
 		{
 			return this._collectables;
 		}
-		
-		public function Showintro(e:Event):void
-		{
-			intro = new MovieClip();
-			intro = Locator.assetsManager.getMovieClip("MC_Intro");
-			Locator.mainStage.addChild(intro);
 
-			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, quitIntro);
-
-		}
 		
-		protected function quitIntro(event:KeyboardEvent):void
-		{
-			if(event.keyCode == Keyboard.ENTER)
-			{
-				Locator.mainStage.removeEventListener(KeyboardEvent.KEY_UP, quitIntro);
-				Locator.mainStage.removeChild(intro);
-				loadMenu(event);				
-			}
-		}		
-		
-		public function loadMenu(e:Event):void
+/*		public function loadMenu(e:Event):void
 		{
 			this._menu.addMenu();
-		}
+		}*/
 		
 		public function startGame():void
 		{
 			//remuevo el menu
 			//if(Locator.mainStage.contains(this._menu.menuModel))
 
-			if(this._menu != null)
+/*			if(this._menu != null)
 			{
 				this._menu.removeMenu();
-			}
+			}*/
 			
-			
-			this._menu = null;
 			
 			Locator.mainStage.addChild(this.containerLevel);
 			this._camera.addToView(this.containerLevel);
@@ -250,8 +226,8 @@ package
 
 			this._isPaused = false;
 			Locator.mainStage.removeChild(pauseGui.model);
-			this._menu = new Menu();
-			this._menu.addMenu();
+			//this._menu = new Menu();
+			//this._menu.addMenu();
 		}
 		
 		public function menuWin(e:MouseEvent):void
@@ -261,8 +237,8 @@ package
 			Locator.mainStage.focus = this.containerLevel;
 			Locator.mainStage.focus = null;
 			//Locator.mainStage.removeChild(pauseGui.model);
-			this._menu = new Menu();
-			this._menu.addMenu();
+			//this._menu = new Menu();
+			//this._menu.addMenu();
 			
 		}
 		

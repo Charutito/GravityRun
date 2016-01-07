@@ -179,7 +179,7 @@ package Characters
 			{
 				if(element is Diamond && this._model.hitTestObject(element.getModel()) )
 					element.destroy();					
-				else if( element is Bullet && this._model.hitTestObject(element.getModel()) )
+				else if(element is Bullet && this._model.hitTestObject(element.getModel()) )
 				{
 					element.destroy();
 					var ex:MovieClip = new MovieClip();

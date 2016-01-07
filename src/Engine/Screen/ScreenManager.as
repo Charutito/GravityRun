@@ -39,7 +39,7 @@ package Engine.Screen
 			targetScreen = name;
 		}
 		
-		protected function EvLoadScreen(event:Event):void
+		public function EvLoadScreen(event:Event):void
 		{
 			currentScreen.removeEventListener("load", EvLoadScreen);
 			
@@ -53,6 +53,19 @@ package Engine.Screen
 			currentScreen = new scrClass();
 			currentScreen.addEventListener(ScreenEvent.CHANGE, evChange);
 			currentScreen.enter();
+		}
+		
+		public function screenMngrLoadScr(name:String):void{
+			if(currentScreen!=null){
+				currentScreen.exit();
+				currentScreen=null;
+			}
+			var myScreenClass:Class=allScreens[name];
+			if(myScreenClass!=null){
+				currentScreen=new myScreenClass();
+				currentScreen.addEventListener(ScreenEvent.CHANGE,evChange);
+				currentScreen.enter();
+			}
 		}
 		
 		protected function evChange(event:ScreenEvent):void

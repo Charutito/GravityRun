@@ -63,7 +63,6 @@ package Engine.Input
 		{
 			return keysByName[name] != null ? keysByName[name].isPressing : false;
 		}
-	
 		
 		
 	}
